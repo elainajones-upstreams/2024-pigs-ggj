@@ -1,4 +1,7 @@
-[gd_scene format=3 uid="uid://ct7ue0nq11t5y"]
+[gd_scene load_steps=3 format=3 uid="uid://ct7ue0nq11t5y"]
+
+[ext_resource type="PackedScene" uid="uid://b083gskoalodk" path="res://scenes/unit.tscn" id="1_xi711"]
+[ext_resource type="PackedScene" uid="uid://bgrfk4xg3yvtp" path="res://scenes/grid.tscn" id="2_a4fnu"]
 
 [node name="world" type="Control"]
 layout_mode = 3
@@ -9,3 +12,9 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="unit" parent="." instance=ExtResource("1_xi711")]
+position = Vector2(321, 235)
+scale = Vector2(10, 10)
+
+[node name="grid" parent="." instance=ExtResource("2_a4fnu")]
