@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://cgi2ls8nl0uuw"]
+
+[node name="dialogue" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="textbox-portrait-divider" type="HSeparator" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 4.0
+
+[node name="text-background-box" type="Panel" parent="textbox-portrait-divider"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="text" type="RichTextLabel" parent="textbox-portrait-divider/text-background-box"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="left-right-portrait-divider" type="VSeparator" parent="textbox-portrait-divider"]
+layout_mode = 0
+offset_right = 4.0
+offset_bottom = 40.0
+
+[node name="left-sprite" type="Sprite2D" parent="textbox-portrait-divider/left-right-portrait-divider"]
+
+[node name="right-sprite" type="Sprite2D" parent="textbox-portrait-divider/left-right-portrait-divider"]
