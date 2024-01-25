@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://cma0egmahfl5s"]
+
+[ext_resource type="PackedScene" uid="uid://ohwa2jy34fd1" path="res://scenes/card.tscn" id="1_kla2l"]
+
+[node name="hand" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="cards" type="HBoxContainer" parent="."]
+layout_mode = 2
+offset_right = 753.0
+offset_bottom = 363.0
+
+[node name="card" parent="cards" instance=ExtResource("1_kla2l")]
+layout_mode = 2
+
+[node name="card2" parent="cards" instance=ExtResource("1_kla2l")]
+layout_mode = 2
+
+[node name="card3" parent="cards" instance=ExtResource("1_kla2l")]
+layout_mode = 2
