@@ -23,6 +23,10 @@ move_to={
 ]
 }
 
+[layer_names]
+
+2d_render/emulate_touch_from_mouse=false
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

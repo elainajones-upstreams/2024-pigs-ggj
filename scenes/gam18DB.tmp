@@ -1,32 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://df87clr3y8vcr"]
+[gd_scene load_steps=6 format=3 uid="uid://df87clr3y8vcr"]
 
 [ext_resource type="TileSet" uid="uid://d0ig0dbqg41k0" path="res://tileset.tres" id="1_ywle6"]
 [ext_resource type="Script" path="res://scripts/pathfind_astar.gd" id="2_1eg46"]
 [ext_resource type="Script" path="res://scripts/character.gd" id="3_8vgae"]
 [ext_resource type="Texture2D" uid="uid://i5rfux7x0aeo" path="res://sprites/characters/idle/protagonist_idle_00.png" id="4_0auyy"]
-[ext_resource type="Texture2D" uid="uid://dj8ljlbar8gho" path="res://sprites/characters/idle/protagonist_idle_01.png" id="5_og0rl"]
-[ext_resource type="Texture2D" uid="uid://b8m4p55whqbp5" path="res://sprites/characters/idle/protagonist_idle_02.png" id="6_yaw4f"]
-[ext_resource type="Texture2D" uid="uid://dejp43quolonw" path="res://sprites/characters/idle/protagonist_idle_04.png" id="7_nerxb"]
-[ext_resource type="Texture2D" uid="uid://cmx1y4qt81l87" path="res://sprites/characters/idle/protagonist_idle_05.png" id="8_g8l02"]
-[ext_resource type="Texture2D" uid="uid://di8jert4t8jjg" path="res://sprites/characters/idle/protagonist_idle_06.png" id="9_2klt2"]
-[ext_resource type="Texture2D" uid="uid://er8cr4du4idp" path="res://sprites/characters/idle/protagonist_idle_07.png" id="10_y3whr"]
-
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_45s1y"]
-frames = 7
-speed_scale = 2.0
-frame_0/texture = ExtResource("4_0auyy")
-frame_1/texture = ExtResource("5_og0rl")
-frame_1/duration = 1.0
-frame_2/texture = ExtResource("6_yaw4f")
-frame_2/duration = 1.0
-frame_3/texture = ExtResource("7_nerxb")
-frame_3/duration = 1.0
-frame_4/texture = ExtResource("8_g8l02")
-frame_4/duration = 1.0
-frame_5/texture = ExtResource("9_2klt2")
-frame_5/duration = 1.0
-frame_6/texture = ExtResource("10_y3whr")
-frame_6/duration = 1.0
+[ext_resource type="Script" path="res://scenes/charsprite.gd" id="5_5tpqm"]
 
 [node name="Game" type="Node2D"]
 
@@ -40,14 +18,12 @@ script = ExtResource("2_1eg46")
 position = Vector2(32, 32)
 script = ExtResource("3_8vgae")
 
-[node name="movesprite" type="Sprite2D" parent="Character"]
+[node name="charsprite" type="Sprite2D" parent="Character"]
 position = Vector2(7, 0)
 scale = Vector2(2, 2)
 texture = ExtResource("4_0auyy")
-
-[node name="idleani" type="Sprite2D" parent="Character"]
-scale = Vector2(2, 2)
-texture = SubResource("AnimatedTexture_45s1y")
+centered = false
+script = ExtResource("5_5tpqm")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(576, 324)
