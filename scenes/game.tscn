@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://df87clr3y8vcr"]
+[gd_scene load_steps=15 format=3 uid="uid://df87clr3y8vcr"]
 
 [ext_resource type="TileSet" uid="uid://d0ig0dbqg41k0" path="res://tileset.tres" id="1_ywle6"]
 [ext_resource type="Script" path="res://scripts/pathfind_astar.gd" id="2_1eg46"]
@@ -10,6 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://cmx1y4qt81l87" path="res://sprites/characters/idle/protagonist_idle_05.png" id="8_g8l02"]
 [ext_resource type="Texture2D" uid="uid://di8jert4t8jjg" path="res://sprites/characters/idle/protagonist_idle_06.png" id="9_2klt2"]
 [ext_resource type="Texture2D" uid="uid://er8cr4du4idp" path="res://sprites/characters/idle/protagonist_idle_07.png" id="10_y3whr"]
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="11_nhi8w"]
+[ext_resource type="Texture2D" uid="uid://dlk5gsb1xkyro" path="res://sprites/character.png" id="12_uotgo"]
+[ext_resource type="Texture2D" uid="uid://bnlj3q5yewmfn" path="res://sprites/path_start.png" id="13_2u1w8"]
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_45s1y"]
 frames = 7
@@ -37,17 +40,30 @@ layer_0/tile_data = PackedInt32Array(393217, 0, 0, 327681, 0, 0, 262145, 0, 0, 2
 script = ExtResource("2_1eg46")
 
 [node name="Character" type="Marker2D" parent="."]
-position = Vector2(32, 32)
+position = Vector2(33, 31)
 script = ExtResource("3_8vgae")
 
 [node name="movesprite" type="Sprite2D" parent="Character"]
+visible = false
 position = Vector2(7, 0)
 scale = Vector2(2, 2)
 texture = ExtResource("4_0auyy")
 
 [node name="idleani" type="Sprite2D" parent="Character"]
+z_index = 2
 scale = Vector2(2, 2)
 texture = SubResource("AnimatedTexture_45s1y")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(576, 324)
+
+[node name="Enemy" type="Marker2D" parent="."]
+position = Vector2(1125, 31)
+script = ExtResource("11_nhi8w")
+
+[node name="baddiesprite" type="Sprite2D" parent="Enemy"]
+texture = ExtResource("13_2u1w8")
+
+[node name="movingbaddie" type="Sprite2D" parent="Enemy"]
+visible = false
+texture = ExtResource("12_uotgo")
