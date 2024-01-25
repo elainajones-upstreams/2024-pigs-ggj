@@ -4,11 +4,3 @@
 
 [node name="row" type="HBoxContainer"]
 script = ExtResource("1_64ks2")
-
-[connection signal="pressed" from="button1" to="button1" method="_on_pressed"]
-[connection signal="pressed" from="button2" to="button2" method="_on_pressed"]
-[connection signal="pressed" from="button3" to="button3" method="_on_pressed"]
-[connection signal="pressed" from="button4" to="button4" method="_on_pressed"]
-[connection signal="pressed" from="button5" to="button5" method="_on_pressed"]
-[connection signal="pressed" from="button6" to="button6" method="_on_pressed"]
-[connection signal="pressed" from="button7" to="button7" method="_on_pressed"]
