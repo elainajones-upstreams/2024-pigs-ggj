@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://cma0egmahfl5s"]
+[gd_scene load_steps=2 format=3 uid="uid://c0r1eely5cde8"]
 
-[ext_resource type="PackedScene" uid="uid://ohwa2jy34fd1" path="res://scenes/card.tscn" id="1_kla2l"]
+[ext_resource type="PackedScene" uid="uid://ccfor3cb3mmc1" path="res://scenes/card.tscn" id="1_kla2l"]
 
 [node name="hand" type="Control"]
 layout_mode = 3

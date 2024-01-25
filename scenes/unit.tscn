@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://cn37p181mxbfb"]
+[gd_scene load_steps=3 format=3 uid="uid://db1sv8hkvid2j"]
 
 [ext_resource type="Script" path="res://scripts/unit.gd" id="1_6x6ge"]
 [ext_resource type="SpriteFrames" path="res://sprites/player_idle_frames.tres" id="2_xq8ls"]

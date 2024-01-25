@@ -2,6 +2,8 @@ extends TileMap
 
 enum Tile { OBSTACLE, START_POINT, END_POINT }
 
+signal turn_end
+
 const CELL_SIZE = Vector2(64, 64)
 const BASE_LINE_WIDTH = 3.0
 const DRAW_COLOR = Color.WHITE
