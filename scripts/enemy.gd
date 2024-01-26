@@ -27,10 +27,10 @@ func _ready():
 	_change_state(State.IDLE)
 
 func _process(_delta):
-	if _state != State.FOLLOW:
-		return
 	if hit_points <= 0:
 		die()
+	if _state != State.FOLLOW:
+		return
 	var arrived_to_next_point = _move_to(_next_point)
 	if arrived_to_next_point:
 		_path.remove_at(0)
