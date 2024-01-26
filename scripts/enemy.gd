@@ -69,7 +69,7 @@ func _change_state(new_state):
 	_state = new_state
 
 func _on_turn_end():
-	if _tile_map.is_point_walkable(player.position):
+	if _tile_map.is_point_walkable(player.position) && _state != State.DYING:
 		_change_state(State.FOLLOW)
 
 func _return_to_idle():
