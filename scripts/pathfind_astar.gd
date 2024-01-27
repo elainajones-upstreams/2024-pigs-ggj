@@ -2,12 +2,23 @@ extends TileMap
 
 enum Tile { OBSTACLE, START_POINT, END_POINT }
 
-signal turn_end
+enum Turn_State { PLAYER_TURN, ENEMY_TURN }
+
+signal enemy_turn
+signal player_turn
 
 const CELL_SIZE = Vector2(64, 64)
 const BASE_LINE_WIDTH = 1.5
 const DRAW_COLOR = Color.WHITE
 const AOE = preload("res://scenes/aoe.tscn")
+const Utils = preload("res://scripts/utils.gd")
+const CompositeSignal = preload("res://scripts/compositesignal.gd")
+
+
+@onready var player = $"../Character"
+@onready var composite_signal = $"../CompositeSignal"
+
+var _turn_state = Turn_State.PLAYER_TURN
 
 # The object for pathfinding on 2D grids.
 var _astar = AStarGrid2D.new()
@@ -15,8 +26,13 @@ var _astar = AStarGrid2D.new()
 var _start_point = Vector2i()
 var _end_point = Vector2i()
 var _path = PackedVector2Array()
+var all_enemy_turns_finished = false
+var enemies : Array[Node]
+#var composite_signal = CompositeSignal.new()
 
 func _ready():
+	player.turn_end.connect(_on_player_turn_end)
+	composite_signal.finished.connect(begin_player_turn)
 	_astar.region = get_used_rect()
 	_astar.cell_size = CELL_SIZE
 	_astar.offset = CELL_SIZE * 0.5
@@ -64,7 +80,7 @@ func clear_path():
 		queue_redraw()
 
 
-func find_path(local_start_point, local_end_point):
+func find_path(local_start_point, local_end_point, move_distance, should_draw):
 	clear_path()
 
 	_start_point = local_to_map(local_start_point)
@@ -72,11 +88,18 @@ func find_path(local_start_point, local_end_point):
 	_path = _astar.get_point_path(_start_point, _end_point)
 
 	if not _path.is_empty():
-		set_cell(0, _start_point, Tile.START_POINT, Vector2i())
-		set_cell(0, _end_point, Tile.END_POINT, Vector2i())
+		if move_distance > 0 && (_path.size()-1) > move_distance:
+			_path.resize(move_distance + 1)
+			if _path.size() >= 2:
+				_end_point = local_to_map(_path[_path.size() - 1])
+			
+		if should_draw:
+			set_cell(0, _start_point, Tile.START_POINT, Vector2i())
+			set_cell(0, _end_point, Tile.END_POINT, Vector2i())
 
 	# Redraw the lines and circles from the start to the end point.
-	queue_redraw()
+	if should_draw:
+		queue_redraw()
 
 	return _path.duplicate()
 
@@ -89,3 +112,27 @@ func execute_attack(attack):
 func get_tile_center(vector):
 	return map_to_local(local_to_map(vector))
 	
+func _on_player_turn_end():
+	_turn_state = Turn_State.ENEMY_TURN
+	play_enemy_turn()
+
+func play_enemy_turn():
+	emit_signal("enemy_turn")
+	enemies = get_tree().get_nodes_in_group("Enemies")
+	print("ENEMY COUNT: " + var_to_str(enemies.size()))
+	#all_enemy_turns_finished = true
+	for enemy in enemies:
+		print("ENEMY STATE: " + var_to_str(enemy._state))
+		composite_signal.add_signal(enemy.exhaust)
+	await composite_signal.finished
+	begin_player_turn()
+		#if enemy._state != Utils.State.EXHAUSTED:
+			#all_enemy_turns_finished = false
+	#if all_enemy_turns_finished:
+		#begin_player_turn()
+		#return
+
+func begin_player_turn():
+	print("PLAYER TURN STARTING")
+	_turn_state = Turn_State.PLAYER_TURN
+	emit_signal("player_turn")
