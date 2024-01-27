@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://df87clr3y8vcr"]
+[gd_scene load_steps=53 format=3 uid="uid://df87clr3y8vcr"]
 
 [ext_resource type="TileSet" uid="uid://b0xakd53wyna2" path="res://tileset.tres" id="1_ywle6"]
 [ext_resource type="Script" path="res://scripts/pathfind_astar.gd" id="2_1eg46"]
@@ -49,7 +49,6 @@
 [ext_resource type="Texture2D" uid="uid://ll58fdupthho" path="res://sprites/baddie/basic_baddie/basic_baddie_death/enemy1_death21.png" id="46_rco3g"]
 [ext_resource type="Texture2D" uid="uid://c20t1mnh6dex5" path="res://sprites/baddie/basic_baddie/basic_baddie_death/enemy1_death22.png" id="47_p0ise"]
 [ext_resource type="Texture2D" uid="uid://bdtt6ic300ap5" path="res://sprites/baddie/basic_baddie/basic_baddie_death/enemy1_death23.png" id="48_bwove"]
-[ext_resource type="Script" path="res://scripts/compositesignal.gd" id="50_njvsk"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_157pr"]
 animations = [{
@@ -144,135 +143,6 @@ animations = [{
 "loop": false,
 "name": &"player_attack",
 "speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("35_3ylxl")
-}, {
-"duration": 1.0,
-"texture": ExtResource("36_lnn4e")
-}, {
-"duration": 1.0,
-"texture": ExtResource("37_eyge5")
-}, {
-"duration": 1.0,
-"texture": ExtResource("38_g4hr4")
-}, {
-"duration": 1.0,
-"texture": ExtResource("39_4x0nf")
-}, {
-"duration": 1.0,
-"texture": ExtResource("40_suvbg")
-}, {
-"duration": 1.0,
-"texture": ExtResource("41_02ehm")
-}, {
-"duration": 1.0,
-"texture": ExtResource("42_hrkr0")
-}, {
-"duration": 1.0,
-"texture": ExtResource("43_6wdpg")
-}, {
-"duration": 1.0,
-"texture": ExtResource("44_udxvy")
-}, {
-"duration": 1.0,
-"texture": ExtResource("45_e4gmj")
-}, {
-"duration": 1.0,
-"texture": ExtResource("46_rco3g")
-}, {
-"duration": 1.0,
-"texture": ExtResource("47_p0ise")
-}, {
-"duration": 1.0,
-"texture": ExtResource("48_bwove")
-}],
-"loop": false,
-"name": &"player_death",
-"speed": 7.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("4_0auyy")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_og0rl")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_yaw4f")
-}, {
-"duration": 1.0,
-"texture": ExtResource("11_8b2bt")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_nerxb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_g8l02")
-}, {
-"duration": 1.0,
-"texture": ExtResource("9_2klt2")
-}, {
-"duration": 1.0,
-"texture": ExtResource("10_y3whr")
-}],
-"loop": true,
-"name": &"player_exhausted",
-"speed": 2.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("4_0auyy")
-}, {
-"duration": 1.0,
-"texture": null
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_og0rl")
-}, {
-"duration": 1.0,
-"texture": null
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_yaw4f")
-}, {
-"duration": 1.0,
-"texture": null
-}, {
-"duration": 1.0,
-"texture": ExtResource("11_8b2bt")
-}, {
-"duration": 1.0,
-"texture": null
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_nerxb")
-}, {
-"duration": 1.0,
-"texture": null
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_g8l02")
-}, {
-"duration": 1.0,
-"texture": null
-}, {
-"duration": 1.0,
-"texture": ExtResource("9_2klt2")
-}, {
-"duration": 1.0,
-"texture": null
-}, {
-"duration": 1.0,
-"texture": ExtResource("10_y3whr")
-}, {
-"duration": 1.0,
-"texture": null
-}],
-"loop": false,
-"name": &"player_take_damage",
-"speed": 15.0
 }]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_trh50"]
@@ -281,9 +151,9 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("21_4u0ot")
 }],
-"loop": false,
+"loop": true,
 "name": &"baddie_attack",
-"speed": 6.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -423,9 +293,12 @@ script = ExtResource("3_8vgae")
 position = Vector2(-1, 0)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_157pr")
-animation = &"player_exhausted"
+animation = &"player_attack"
 
-[node name="Enemy" type="CharacterBody2D" parent="." groups=["Enemies"]]
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(576, 324)
+
+[node name="Enemy" type="CharacterBody2D" parent="."]
 position = Vector2(1125, 31)
 script = ExtResource("11_nhi8w")
 
@@ -438,9 +311,3 @@ animation = &"baddie_attack"
 [node name="baddiecollision" type="CollisionShape2D" parent="Enemy"]
 scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_c5jdx")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-offset = Vector2(576, 324)
-
-[node name="CompositeSignal" type="Node2D" parent="."]
-script = ExtResource("50_njvsk")
