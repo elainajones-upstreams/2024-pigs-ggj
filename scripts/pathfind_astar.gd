@@ -5,8 +5,9 @@ enum Tile { OBSTACLE, START_POINT, END_POINT }
 signal turn_end
 
 const CELL_SIZE = Vector2(64, 64)
-const BASE_LINE_WIDTH = 3.0
+const BASE_LINE_WIDTH = 1.5
 const DRAW_COLOR = Color.WHITE
+const AOE = preload("res://scenes/aoe.tscn")
 
 # The object for pathfinding on 2D grids.
 var _astar = AStarGrid2D.new()
@@ -78,3 +79,13 @@ func find_path(local_start_point, local_end_point):
 	queue_redraw()
 
 	return _path.duplicate()
+
+func execute_attack(attack):
+	#var targetTile = get_cell_atlas_coords(1, local_to_map(attack.center))
+	var aoe_instance = AOE.instantiate()
+	aoe_instance.attack = attack
+	add_child(aoe_instance)
+	
+func get_tile_center(vector):
+	return map_to_local(local_to_map(vector))
+	
