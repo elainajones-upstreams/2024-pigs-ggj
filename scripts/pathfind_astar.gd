@@ -74,8 +74,8 @@ func is_point_walkable(local_position):
 func clear_path():
 	if not _path.is_empty():
 		_path.clear()
-		erase_cell(0, _start_point)
-		erase_cell(0, _end_point)
+		#erase_cell(0, _start_point)
+		#erase_cell(0, _end_point)
 		# Queue redraw to clear the lines and circles.
 		queue_redraw()
 
@@ -94,8 +94,9 @@ func find_path(local_start_point, local_end_point, move_distance, should_draw):
 				_end_point = local_to_map(_path[_path.size() - 1])
 			
 		if should_draw:
-			set_cell(0, _start_point, Tile.START_POINT, Vector2i())
-			set_cell(0, _end_point, Tile.END_POINT, Vector2i())
+			pass
+			#set_cell(0, _start_point, Tile.START_POINT, Vector2i())
+			#set_cell(0, _end_point, Tile.END_POINT, Vector2i())
 
 	# Redraw the lines and circles from the start to the end point.
 	if should_draw:
