@@ -110,6 +110,7 @@ func die():
 	position = baddie_orig_position
 	hit_points = 10
 	baddie_sprite.play("baddie_idle")
+	_change_state(Utils.State.IDLE)
 	
 func attack():
 	_change_state(Utils.State.ATTACKING)
