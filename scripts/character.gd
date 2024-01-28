@@ -101,7 +101,7 @@ func _change_state(new_state):
 		_tile_map.clear_all_paths()
 		animated_sprite.play("idle")
 	elif new_state == Utils.State.FOLLOW:
-		_path = _tile_map.find_and_add_path(position, _click_position, action_points, true)
+		_path = _tile_map.find_player_path(position, _click_position, action_points)
 		animated_sprite.play("move")
 		if _path.size() < 2:
 			_change_state(Utils.State.IDLE)

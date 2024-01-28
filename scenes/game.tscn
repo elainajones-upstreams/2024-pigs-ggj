@@ -473,7 +473,7 @@ script = ExtResource("3_8vgae")
 position = Vector2(-1, 0)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_157pr")
-animation = &"move"
+animation = &"player_death"
 
 [node name="ground_attack" type="AudioStreamPlayer2D" parent="Character"]
 stream = ExtResource("42_vln8a")
