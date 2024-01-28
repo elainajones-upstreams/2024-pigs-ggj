@@ -4,7 +4,7 @@ extends Node2D
 
 const MASS = 5.0
 const ARRIVE_DISTANCE = 10.0
-const CHARACTER_MAX_HP = 20
+const CHARACTER_MAX_HP = 50
 const CHARACTER_ACTION_POINTS = 7
 const ATTACK_COST = 2
 const Attack = preload("res://scripts/attack.gd")
@@ -71,6 +71,7 @@ func _unhandled_input(event):
 				_change_state(Utils.State.FOLLOW)
 		if event.is_action_pressed(&"attack"):
 			_attack(_click_position)
+			_tile_map.player_attack_squares()
 		elif event.is_action_pressed(&"end_turn"):
 			end_turn()
 	if _state == Utils.State.EXHAUSTED:
@@ -98,7 +99,7 @@ func _change_state(new_state):
 		_tile_map.clear_all_paths()
 		animated_sprite.play("idle")
 	elif new_state == Utils.State.FOLLOW:
-		_path = _tile_map.find_path(position, _click_position, action_points, true)
+		_path = _tile_map.find_and_add_path(position, _click_position, action_points, true)
 		animated_sprite.play("idle")
 		if _path.size() < 2:
 			_change_state(Utils.State.IDLE)

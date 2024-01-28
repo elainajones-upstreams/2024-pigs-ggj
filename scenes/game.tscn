@@ -453,6 +453,20 @@ animation = &"baddie_attack"
 scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_c5jdx")
 
+[node name="Enemy3" type="CharacterBody2D" parent="." groups=["Enemies"]]
+position = Vector2(33, 615)
+script = ExtResource("11_nhi8w")
+
+[node name="baddiesprite" type="AnimatedSprite2D" parent="Enemy3"]
+position = Vector2(-5, 2)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_trh50")
+animation = &"baddie_attack"
+
+[node name="baddiecollision" type="CollisionShape2D" parent="Enemy3"]
+scale = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_c5jdx")
+
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(576, 324)
 
