@@ -191,6 +191,7 @@ func calculate_enemy_pathing(enemies):
 				return
 			#set_cell(0, enemy_path[enemy_path.size() - 1], Tile.END_POINT, Vector2i())
 			_all_paths.append(enemy_path)
+			enemy.needs_pathing = false
 			queue_redraw()
 			#_astar.set_point_solid(enemy_path[enemy_path.size() - 1])
 			#blocked_points.append(enemy_path[enemy_path.size() - 1])
