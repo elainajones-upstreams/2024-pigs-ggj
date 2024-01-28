@@ -55,6 +55,7 @@ func _process(_delta):
 		_path.remove_at(0)
 		if _path.is_empty():
 			_change_state(Utils.State.IDLE)
+			_tile_map.clear_all_paths()
 			return
 		_next_point = _path[0]
 
@@ -94,7 +95,7 @@ func _move_to(local_position):
 
 func _change_state(new_state):
 	if new_state == Utils.State.IDLE:
-		_tile_map.clear_path()
+		_tile_map.clear_all_paths()
 		animated_sprite.play("idle")
 	elif new_state == Utils.State.FOLLOW:
 		_path = _tile_map.find_path(position, _click_position, action_points, true)
@@ -114,7 +115,7 @@ func _change_state(new_state):
 		animated_sprite.play("player_exhausted")
 	elif new_state == Utils.State.NOT_MY_TURN:
 		animated_sprite.modulate = player_orig_color
-		animated_sprite.play("player_idle")
+		animated_sprite.play("idle")
 		print("I AM ENDING MY TURN")
 	_state = new_state
 	

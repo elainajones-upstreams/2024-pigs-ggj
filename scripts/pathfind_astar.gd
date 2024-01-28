@@ -6,6 +6,7 @@ enum Turn_State { PLAYER_TURN, ENEMY_TURN }
 
 signal enemy_turn
 signal player_turn
+signal enemy_pathing_calculated
 
 const CELL_SIZE = Vector2(64, 64)
 const BASE_LINE_WIDTH = 1.5
@@ -26,13 +27,17 @@ var _astar = AStarGrid2D.new()
 var _start_point = Vector2i()
 var _end_point = Vector2i()
 var _path = PackedVector2Array()
+var _all_paths : Array[PackedVector2Array]
+var enemy_path = PackedVector2Array()
+var blocked_points = PackedVector2Array()
 var all_enemy_turns_finished = false
 var enemies : Array[Node]
 #var composite_signal = CompositeSignal.new()
 
 func _ready():
+	enemies = get_tree().get_nodes_in_group("Enemies")
 	player.turn_end.connect(_on_player_turn_end)
-	composite_signal.finished.connect(begin_player_turn)
+	#composite_signal.finished.connect(begin_player_turn)
 	_astar.region = get_used_rect()
 	_astar.cell_size = CELL_SIZE
 	_astar.offset = CELL_SIZE * 0.5
@@ -49,15 +54,16 @@ func _ready():
 
 
 func _draw():
-	if _path.is_empty():
+	if _all_paths.size() == 0:
 		return
-
-	var last_point = _path[0]
-	for index in range(1, len(_path)):
-		var current_point = _path[index]
-		draw_line(last_point, current_point, DRAW_COLOR, BASE_LINE_WIDTH, true)
-		draw_circle(current_point, BASE_LINE_WIDTH * 2.0, DRAW_COLOR)
-		last_point = current_point
+	
+	for path in _all_paths:
+		var last_point = path[0]
+		for index in range(1, len(path)):
+			var current_point = path[index]
+			draw_line(last_point, current_point, DRAW_COLOR, BASE_LINE_WIDTH, true)
+			draw_circle(current_point, BASE_LINE_WIDTH * 2.0, DRAW_COLOR)
+			last_point = current_point
 
 
 func round_local_position(local_position):
@@ -71,21 +77,30 @@ func is_point_walkable(local_position):
 	return false
 
 
-func clear_path():
-	if not _path.is_empty():
-		_path.clear()
-		erase_cell(0, _start_point)
-		erase_cell(0, _end_point)
+func clear_all_paths():
+	for path in _all_paths:
+		clear_path(path)
+	_all_paths.resize(0)
+
+func clear_path(path):
+	if not path.is_empty():
+		erase_cell(0, local_to_map(path[0]))
+		erase_cell(0, local_to_map(path[path.size() - 1]))
 		# Queue redraw to clear the lines and circles.
+		path.clear()
 		queue_redraw()
 
+func find_and_add_path(local_start_point, local_end_point, move_distance, should_draw):
+	find_path(local_start_point, local_end_point, move_distance, should_draw)
 
 func find_path(local_start_point, local_end_point, move_distance, should_draw):
-	clear_path()
 
 	_start_point = local_to_map(local_start_point)
 	_end_point = local_to_map(local_end_point)
+	print("STAART POINT " + var_to_str(local_start_point))
+	print("END POINT " + var_to_str(local_end_point))
 	_path = _astar.get_point_path(_start_point, _end_point)
+	print("PATH_LENGTH " + var_to_str(_path))
 
 	if not _path.is_empty():
 		if move_distance > 0 && (_path.size()-1) > move_distance:
@@ -97,6 +112,7 @@ func find_path(local_start_point, local_end_point, move_distance, should_draw):
 			set_cell(0, _start_point, Tile.START_POINT, Vector2i())
 			set_cell(0, _end_point, Tile.END_POINT, Vector2i())
 
+	_all_paths.append(_path)
 	# Redraw the lines and circles from the start to the end point.
 	if should_draw:
 		queue_redraw()
@@ -117,22 +133,67 @@ func _on_player_turn_end():
 	play_enemy_turn()
 
 func play_enemy_turn():
-	emit_signal("enemy_turn")
-	enemies = get_tree().get_nodes_in_group("Enemies")
+	
 	print("ENEMY COUNT: " + var_to_str(enemies.size()))
 	#all_enemy_turns_finished = true
 	for enemy in enemies:
+		enemy.prepare_for_pathing()
+	#await composite_signal.finished
+	calculate_enemy_pathing(enemies)
+	for enemy in enemies:
 		print("ENEMY STATE: " + var_to_str(enemy._state))
 		composite_signal.add_signal(enemy.exhaust)
+	emit_signal("enemy_turn")
 	await composite_signal.finished
+	clear_all_paths()
 	begin_player_turn()
 		#if enemy._state != Utils.State.EXHAUSTED:
 			#all_enemy_turns_finished = false
-	#if all_enemy_turns_finished:
+	#if all_enemy_turns_finished:s
 		#begin_player_turn()
 		#return
 
 func begin_player_turn():
 	print("PLAYER TURN STARTING")
+	for enemy in enemies:
+		enemy._state = Utils.State.NOT_MY_TURN
 	_turn_state = Turn_State.PLAYER_TURN
 	emit_signal("player_turn")
+	
+func calculate_enemy_pathing(enemies):
+	#_astar.set_point_solid(local_to_map(player.position))
+	#blocked_points.append(local_to_map(player.position))
+	#_path = _tile_map.find_path(position, player.position, enemy_move_distance, true)
+	for enemy in enemies:
+		if enemy.needs_pathing:
+			enemy_path = find_path(enemy.position, enemy.target, enemy.enemy_move_distance, true)
+			prune_path(enemy_path)
+			enemy._path = enemy_path
+			if enemy_path.size() == 0:
+				enemy.cant_move == true
+			#_astar.set_point_solid(enemy_path[enemy_path.size() - 1])
+			#blocked_points.append(enemy_path[enemy_path.size() - 1])
+	#for point in blocked_points:
+		#_astar.set_point_solid(point, false)
+	#blocked_points.resize(0)
+	#emit_signal("enemy_pathing_calculated")
+	
+
+func prune_path(path):
+	print("POSITION " + var_to_str(local_to_map(player.position)))
+	print("PATH " + var_to_str(path[path.size() - 1]))
+	if path.size() == 0:
+		return
+	if local_to_map(path[path.size() - 1]) == local_to_map(player.position):
+		path.resize(path.size() - 1)
+		prune_path(path)
+	for other_path in _all_paths:
+		if other_path != path && path[path.size() - 1] == other_path[other_path.size() - 1]:
+			path.resize(path.size() - 1)
+			prune_path(path)
+	for enemy in enemies:
+		if enemy.needs_pathing == false:
+			if local_to_map(path[path.size() - 1]) == local_to_map(enemy.position):
+				path.resize(path.size() - 1)
+				prune_path(path)
+	
