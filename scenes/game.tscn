@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://df87clr3y8vcr"]
+[gd_scene load_steps=73 format=3 uid="uid://df87clr3y8vcr"]
 
 [ext_resource type="TileSet" uid="uid://b0xakd53wyna2" path="res://tileset.tres" id="1_ywle6"]
 [ext_resource type="Script" path="res://scripts/pathfind_astar.gd" id="2_1eg46"]
@@ -50,6 +50,7 @@
 [ext_resource type="Texture2D" uid="uid://dvp3mjdnaq1qr" path="res://sprites/baddie/basic_baddie/basic_baddie_death/enemy1_death15.png" id="40_suvbg"]
 [ext_resource type="Texture2D" uid="uid://dnxubhnwa6ima" path="res://sprites/baddie/basic_baddie/basic_baddie_death/enemy1_death16.png" id="41_02ehm"]
 [ext_resource type="Texture2D" uid="uid://uco3qvlj21s1" path="res://sprites/baddie/basic_baddie/basic_baddie_death/enemy1_death17.png" id="42_hrkr0"]
+[ext_resource type="AudioStream" uid="uid://b5ejxgh23drr" path="res://sound/sfx/protag_attack_groundstrike.wav" id="42_vln8a"]
 [ext_resource type="Texture2D" uid="uid://dnaatxnfov3pi" path="res://sprites/baddie/basic_baddie/basic_baddie_death/enemy1_death18.png" id="43_6wdpg"]
 [ext_resource type="Texture2D" uid="uid://duq1pkmpg6r65" path="res://sprites/baddie/basic_baddie/basic_baddie_attack/enemy1_attack_00.png" id="43_hxtuu"]
 [ext_resource type="Texture2D" uid="uid://cjuvyn7onta0d" path="res://sprites/baddie/basic_baddie/basic_baddie_death/enemy1_death19.png" id="44_udxvy"]
@@ -67,6 +68,7 @@
 [ext_resource type="Texture2D" uid="uid://bqo8v5k34nlgy" path="res://sprites/baddie/basic_baddie/basic_baddie_attack/enemy1_attack_07.png" id="50_utnkq"]
 [ext_resource type="Texture2D" uid="uid://c3fxcmhev3wyx" path="res://sprites/baddie/basic_baddie/basic_baddie_attack/enemy1_attack_08.png" id="51_6m02e"]
 [ext_resource type="Texture2D" uid="uid://svv1m1o51ia6" path="res://sprites/baddie/basic_baddie/basic_baddie_attack/enemy1_attack_09.png" id="52_8q4vk"]
+[ext_resource type="AudioStream" uid="uid://bouojvkjhfb6p" path="res://sound/sfx/enemy1_death.wav" id="68_uqn1r"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_157pr"]
 animations = [{
@@ -131,7 +133,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"move",
-"speed": 6.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -471,6 +473,9 @@ scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_157pr")
 animation = &"move"
 
+[node name="ground_attack" type="AudioStreamPlayer2D" parent="Character"]
+stream = ExtResource("42_vln8a")
+
 [node name="Enemy" type="CharacterBody2D" parent="." groups=["Enemies"]]
 position = Vector2(1125, 31)
 script = ExtResource("11_nhi8w")
@@ -483,6 +488,11 @@ sprite_frames = SubResource("SpriteFrames_trh50")
 [node name="baddiecollision" type="CollisionShape2D" parent="Enemy"]
 scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_c5jdx")
+
+[node name="baddie_death_sound" type="AudioStreamPlayer2D" parent="Enemy"]
+stream = ExtResource("68_uqn1r")
+
+[node name="baddie_attack_sound" type="AudioStreamPlayer2D" parent="Enemy"]
 
 [node name="Enemy2" type="CharacterBody2D" parent="." groups=["Enemies"]]
 position = Vector2(1125, 615)

@@ -20,6 +20,9 @@ var _velocity = Vector2()
 
 @onready var _tile_map = $"../TileMap"
 @onready var animated_sprite = $charactersprite
+@onready var ground_attack = $ground_attack
+@onready var baddie_attack_sound = $baddie_attack_sound
+@onready var baddie_death_sound = $baddie_death_sound
 @onready var player_orig_position = position
 var player_orig_color : Color
 
@@ -111,7 +114,9 @@ func _change_state(new_state):
 		print("ACTION POINTS: " + var_to_str(action_points))
 		_next_point = _path[1]
 	elif new_state == Utils.State.DYING:
+		_state = new_state
 		die()
+		return
 	elif new_state == Utils.State.EXHAUSTED:
 		animated_sprite.modulate = Color(0, 1, 0)
 		animated_sprite.play("player_exhausted")
@@ -125,6 +130,7 @@ func _attack(click_position):
 	if action_points >= ATTACK_COST:
 		_tile_map.execute_attack(Attack.new(10, _tile_map.get_tile_center(click_position)))
 		animated_sprite.play("player_attack")
+		ground_attack.play(0.0)
 		await animated_sprite.animation_finished
 		action_points = action_points - ATTACK_COST
 		print("Action PPoint after attack: " + var_to_str(action_points))

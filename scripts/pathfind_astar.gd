@@ -164,7 +164,8 @@ func play_enemy_turn():
 func begin_player_turn():
 	print("PLAYER TURN STARTING")
 	for enemy in enemies:
-		enemy._state = Utils.State.NOT_MY_TURN
+		if enemy._state != Utils.State.DYING:
+			enemy._state = Utils.State.NOT_MY_TURN
 	_turn_state = Turn_State.PLAYER_TURN
 	emit_signal("player_turn")
 	

@@ -37,7 +37,7 @@ func _ready():
 	_change_state(Utils.State.IDLE)
 
 func _process(_delta):
-	if hit_points <= 0:
+	if hit_points <= 0 && _state != Utils.State.DYING:
 		die()
 	if _state != Utils.State.FOLLOW:
 		return
@@ -91,6 +91,7 @@ func _change_state(new_state):
 		baddie_sprite.play("baddie_move")
 		_next_point = _path[1]
 	_state = new_state 
+	
 func _take_turn():
 	if _state == Utils.State.DYING:
 		emit_signal("exhaust")
@@ -113,7 +114,7 @@ func _take_turn():
 		_change_state(Utils.State.EXHAUSTED)
 		
 func prepare_for_pathing():
-	if player_adjacent():
+	if player_adjacent() || _state == Utils.State.DYING:
 		needs_pathing = false
 	elif _tile_map.is_point_walkable(player.position) && _state != Utils.State.DYING:
 		needs_pathing = true
@@ -135,6 +136,7 @@ func on_hit(atk):
 	
 	
 func die():
+	print("ENEMY DOWN")
 	_change_state(Utils.State.DYING)
 	baddie_sprite.play("baddie_die")
 	#await get_tree().create_timer(death_delay).timeout
@@ -150,8 +152,8 @@ func die():
 	
 func attack():
 	_change_state(Utils.State.ATTACKING)
-	baddie_sprite.play("baddie_attack")
 	player.on_hit(Attack.new(7, player.position))
+	baddie_sprite.play("baddie_attack")
 	await baddie_sprite.animation_finished
 	baddie_sprite.play("baddie_idle")
 	_change_state(Utils.State.EXHAUSTED)
