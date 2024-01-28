@@ -48,11 +48,17 @@ func _ready():
 	_astar.default_estimate_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
 	_astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
 	_astar.update()
-
+	
+	# Stupid fucking enum bullshit to set_point_solid for cell 0. 
+	# Very abstract for no damn reason ugh! Obstacle tiles in a list 
+	# is more pythonic and more clear what this does. 
+	# Tile cell ids to set as obstacles.
+	var obstacle_tiles = [0, 1]
 	for i in range(_astar.region.position.x, _astar.region.end.x):
 		for j in range(_astar.region.position.y, _astar.region.end.y):
 			var pos = Vector2i(i, j)
-			if get_cell_source_id(0, pos) == Tile.OBSTACLE:
+			
+			if get_cell_source_id(0, pos) in obstacle_tiles:
 				_astar.set_point_solid(pos)
 				
 	music_player._ready()
