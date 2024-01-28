@@ -1,36 +1,18 @@
-[gd_resource type="TileSet" load_steps=11 format=3 uid="uid://b0xakd53wyna2"]
+[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://b0xakd53wyna2"]
 
-[ext_resource type="Texture2D" uid="uid://bc87elh4cxdll" path="res://sprites/obstacle.png" id="1"]
-[ext_resource type="Texture2D" uid="uid://bnlj3q5yewmfn" path="res://sprites/path_start.png" id="2"]
-[ext_resource type="Texture2D" uid="uid://783n6rekp7x4" path="res://sprites/path_end.png" id="3"]
-[ext_resource type="Texture2D" uid="uid://dlu72oemkxn8x" path="res://sprites/tiles/tile_04.png" id="4_8lj3m"]
+[ext_resource type="Texture2D" uid="uid://xex0valhs608" path="res://sprites/tiles/tileset_64purple.png" id="1_xf577"]
 [ext_resource type="Texture2D" uid="uid://b45dqqfi5kkf4" path="res://sprites/tiles/biomech_background_tile.png" id="5_lf7b6"]
+[ext_resource type="Texture2D" uid="uid://d1vm7fkllmg0e" path="res://sprites/tiles/tileset_64teal.png" id="7_8dm7v"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tol7a"]
-texture = ExtResource("1")
-texture_region_size = Vector2i(64, 64)
-0:0/0 = 0
-1:0/0 = 0
-1:1/0 = 0
-0:1/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gx51g"]
-texture = ExtResource("2")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lb716"]
+texture = ExtResource("1_xf577")
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2sont"]
-texture = ExtResource("3")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nafbd"]
+texture = ExtResource("7_8dm7v")
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_osims"]
-texture = ExtResource("4_8lj3m")
-texture_region_size = Vector2i(64, 64)
-0:0/0 = 0
-1:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a45w7"]
 texture = ExtResource("5_lf7b6")
@@ -54,8 +36,6 @@ texture_region_size = Vector2i(64, 64)
 
 [resource]
 tile_size = Vector2i(64, 64)
-sources/0 = SubResource("TileSetAtlasSource_tol7a")
-sources/1 = SubResource("TileSetAtlasSource_gx51g")
-sources/2 = SubResource("TileSetAtlasSource_2sont")
-sources/3 = SubResource("TileSetAtlasSource_osims")
 sources/4 = SubResource("TileSetAtlasSource_a45w7")
+sources/0 = SubResource("TileSetAtlasSource_lb716")
+sources/1 = SubResource("TileSetAtlasSource_nafbd")
