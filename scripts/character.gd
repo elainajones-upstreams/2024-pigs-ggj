@@ -1,4 +1,4 @@
-extends Node2D
+extends CharacterBody2D
 
 
 
@@ -20,6 +20,7 @@ var _velocity = Vector2()
 
 @onready var _tile_map = $"../TileMap"
 @onready var animated_sprite = $charactersprite
+@onready var ground_attack = $ground_attack
 @onready var player_orig_position = position
 var player_orig_color : Color
 
@@ -100,7 +101,7 @@ func _change_state(new_state):
 		_tile_map.clear_all_paths()
 		animated_sprite.play("idle")
 	elif new_state == Utils.State.FOLLOW:
-		_path = _tile_map.find_and_add_path(position, _click_position, action_points, true)
+		_path = _tile_map.find_player_path(position, _click_position, action_points)
 		animated_sprite.play("move")
 		if _path.size() < 2:
 			_change_state(Utils.State.IDLE)
@@ -111,7 +112,9 @@ func _change_state(new_state):
 		print("ACTION POINTS: " + var_to_str(action_points))
 		_next_point = _path[1]
 	elif new_state == Utils.State.DYING:
+		_state = new_state
 		die()
+		return
 	elif new_state == Utils.State.EXHAUSTED:
 		animated_sprite.modulate = Color(0, 1, 0)
 		animated_sprite.play("player_exhausted")
@@ -125,6 +128,7 @@ func _attack(click_position):
 	if action_points >= ATTACK_COST:
 		_tile_map.execute_attack(Attack.new(10, _tile_map.get_tile_center(click_position)))
 		animated_sprite.play("player_attack")
+		ground_attack.play(0.0)
 		await animated_sprite.animation_finished
 		action_points = action_points - ATTACK_COST
 		print("Action PPoint after attack: " + var_to_str(action_points))
