@@ -9,6 +9,7 @@ const CHARACTER_ACTION_POINTS = 7
 const ATTACK_COST = 2
 const Attack = preload("res://scripts/attack.gd")
 const Utils = preload("res://scripts/utils.gd")
+const vertical = [Vector2i(0, -5), Vector2i(0, -4), Vector2i(0, -3), Vector2i(0, -2), Vector2i(0, -1), Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, 2), Vector2i(0, 3), Vector2i(0, 4), Vector2i(0, 5)]
 
 signal turn_end
 
@@ -27,11 +28,12 @@ var player_orig_color : Color
 var _click_position = Vector2()
 var _path = PackedVector2Array()
 var _next_point = Vector2()
+var attacks = {}
 
 var hit_points : int
 var action_points : int
 
-
+var current_attack : Attack
 
 func _ready():
 	hit_points = CHARACTER_MAX_HP
@@ -40,6 +42,9 @@ func _ready():
 	player_orig_color = animated_sprite.modulate
 	animated_sprite.animation_finished.connect(_return_to_idle)
 	_tile_map.player_turn.connect(_start_turn)
+	attacks["basic"] = Attack.new(10, position, [Vector2i(0, 0)])
+	#attacks["basic"] = Attack.new(10, position, vertical)
+	
 
 
 func _process(_delta):
@@ -71,7 +76,10 @@ func _unhandled_input(event):
 			if event.is_action_pressed(&"move_to"):
 				_change_state(Utils.State.FOLLOW)
 		if event.is_action_pressed(&"attack"):
-			_attack(_click_position)
+			_attack(_click_position, "basic")
+			_tile_map.player_attack_squares()
+		if event.is_action_pressed(&"aoe_attack"):
+			_attack(_click_position, "vertical")
 			_tile_map.player_attack_squares()
 		#TODO: Player should not be able to do this while an enemy is dying, that breaks it
 		elif event.is_action_pressed(&"end_turn"):
@@ -124,9 +132,14 @@ func _change_state(new_state):
 		print("I AM ENDING MY TURN")
 	_state = new_state
 	
-func _attack(click_position):
+func _attack(click_position, attackName):
 	if action_points >= ATTACK_COST:
-		_tile_map.execute_attack(Attack.new(10, _tile_map.get_tile_center(click_position)))
+		print("CLICK ATTACK " + var_to_str(_tile_map.get_tile_center(click_position)))
+		print("BEFORE ATTACK " + var_to_str(attacks["basic"].center))
+		current_attack = attacks[attackName]
+		current_attack.center == _tile_map.get_tile_center(click_position)
+		print("AFTER ATTACK " + var_to_str(current_attack.center))
+		_tile_map.execute_attack(current_attack)
 		animated_sprite.play("player_attack")
 		ground_attack.play(0.0)
 		await animated_sprite.animation_finished
