@@ -1,6 +1,7 @@
 extends Area2D
 
 var damage_delay_time = 0.3
+var linger_time = 2
 
 var attack : Attack
 
@@ -23,4 +24,5 @@ func aoe():
 	var targets = get_overlapping_bodies()
 	for target in targets:
 		target.on_hit(attack)
+	await get_tree().create_timer(linger_time).timeout
 	queue_free()

@@ -1,7 +1,31 @@
-[gd_scene load_steps=5 format=3 uid="uid://6dtypoj7r5p5"]
+[gd_scene load_steps=29 format=3 uid="uid://6dtypoj7r5p5"]
 
-[ext_resource type="Texture2D" uid="uid://v2s125c2b6y8" path="res://sprites/baddie/basic_baddie/basic_baddie_death/enemy1_death10.png" id="1_4c71o"]
 [ext_resource type="Script" path="res://scripts/aoe.gd" id="1_8eais"]
+[ext_resource type="Texture2D" uid="uid://ygfgpbg5h3ha" path="res://sprites/aoe/single_tile/AOE_attack_00.png" id="2_lgndt"]
+[ext_resource type="Texture2D" uid="uid://u2yyt064d172" path="res://sprites/aoe/single_tile/AOE_attack_01.png" id="3_20sce"]
+[ext_resource type="Texture2D" uid="uid://bdgvapghmtj17" path="res://sprites/aoe/single_tile/AOE_attack_02.png" id="4_hpago"]
+[ext_resource type="Texture2D" uid="uid://dqx08v5tww7q3" path="res://sprites/aoe/single_tile/AOE_attack_03.png" id="5_jpypt"]
+[ext_resource type="Texture2D" uid="uid://by1u25u7o04w0" path="res://sprites/aoe/single_tile/AOE_attack_04.png" id="6_1gkab"]
+[ext_resource type="Texture2D" uid="uid://clbkhveifo7dj" path="res://sprites/aoe/single_tile/AOE_attack_05.png" id="7_qbao3"]
+[ext_resource type="Texture2D" uid="uid://cy2g5alpxeq46" path="res://sprites/aoe/single_tile/AOE_attack_06.png" id="8_slwi0"]
+[ext_resource type="Texture2D" uid="uid://bj80064ili8hf" path="res://sprites/aoe/single_tile/AOE_attack_07.png" id="9_4wlvf"]
+[ext_resource type="Texture2D" uid="uid://dxi3erymf1mjn" path="res://sprites/aoe/single_tile/AOE_attack_08.png" id="10_4uc22"]
+[ext_resource type="Texture2D" uid="uid://f06x85ju4csv" path="res://sprites/aoe/single_tile/AOE_attack_09.png" id="11_02wht"]
+[ext_resource type="Texture2D" uid="uid://byrct74017avq" path="res://sprites/aoe/single_tile/AOE_attack_10.png" id="12_jr7fa"]
+[ext_resource type="Texture2D" uid="uid://l5pox40ihp7e" path="res://sprites/aoe/single_tile/AOE_attack_11.png" id="13_nfx1u"]
+[ext_resource type="Texture2D" uid="uid://d0qenatqid6lq" path="res://sprites/aoe/single_tile/AOE_attack_12.png" id="14_xvnd5"]
+[ext_resource type="Texture2D" uid="uid://c8v3oav777nis" path="res://sprites/aoe/single_tile/AOE_attack_13.png" id="15_lc3mv"]
+[ext_resource type="Texture2D" uid="uid://co15otweql7bo" path="res://sprites/aoe/single_tile/AOE_attack_14.png" id="16_0micm"]
+[ext_resource type="Texture2D" uid="uid://bgyvkckkk40jp" path="res://sprites/aoe/single_tile/AOE_attack_15.png" id="17_6gmnj"]
+[ext_resource type="Texture2D" uid="uid://bw4glgtdpy64x" path="res://sprites/aoe/single_tile/AOE_attack_16.png" id="18_5k28w"]
+[ext_resource type="Texture2D" uid="uid://6d8xeq5xdkin" path="res://sprites/aoe/single_tile/AOE_attack_17.png" id="19_a7yvs"]
+[ext_resource type="Texture2D" uid="uid://w27sgysl5iv6" path="res://sprites/aoe/single_tile/AOE_attack_18.png" id="20_nqfox"]
+[ext_resource type="Texture2D" uid="uid://cmx30x35paluv" path="res://sprites/aoe/single_tile/AOE_attack_19.png" id="21_bnlor"]
+[ext_resource type="Texture2D" uid="uid://dsjmlyfafcm53" path="res://sprites/aoe/single_tile/AOE_attack_20.png" id="22_05tee"]
+[ext_resource type="Texture2D" uid="uid://xvbqcbqwfg57" path="res://sprites/aoe/single_tile/AOE_attack_21.png" id="23_rge5e"]
+[ext_resource type="Texture2D" uid="uid://ce67g1fyqdual" path="res://sprites/aoe/single_tile/AOE_attack_22.png" id="24_134sv"]
+[ext_resource type="Texture2D" uid="uid://bgu7cwkb0ofae" path="res://sprites/aoe/single_tile/AOE_attack_23.png" id="25_rria7"]
+[ext_resource type="Texture2D" uid="uid://dthg1qtkn0urg" path="res://sprites/aoe/single_tile/AOE_attack_24.png" id="26_j01li"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gb3rd"]
 size = Vector2(64, 64)
@@ -10,14 +34,83 @@ size = Vector2(64, 64)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_4c71o")
+"texture": ExtResource("2_lgndt")
 }, {
 "duration": 1.0,
-"texture": ExtResource("1_4c71o")
+"texture": ExtResource("3_20sce")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_hpago")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_jpypt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_1gkab")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_qbao3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_slwi0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_4wlvf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_4uc22")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_02wht")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_jr7fa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_nfx1u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_xvnd5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_lc3mv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_0micm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_6gmnj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_5k28w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_a7yvs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_nqfox")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_bnlor")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_05tee")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_rge5e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_134sv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_rria7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_j01li")
 }],
-"loop": true,
+"loop": false,
 "name": &"aoe",
-"speed": 5.0
+"speed": 16.0
 }, {
 "frames": [],
 "loop": true,
@@ -32,6 +125,7 @@ script = ExtResource("1_8eais")
 shape = SubResource("RectangleShape2D_gb3rd")
 
 [node name="aoeAnimation" type="AnimatedSprite2D" parent="."]
+z_index = 6
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_jvkc4")
 animation = &"aoe"

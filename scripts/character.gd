@@ -72,6 +72,7 @@ func _unhandled_input(event):
 		if event.is_action_pressed(&"attack"):
 			_attack(_click_position)
 			_tile_map.player_attack_squares()
+		#TODO: Player should not be able to do this while an enemy is dying, that breaks it
 		elif event.is_action_pressed(&"end_turn"):
 			end_turn()
 	if _state == Utils.State.EXHAUSTED:
@@ -100,7 +101,7 @@ func _change_state(new_state):
 		animated_sprite.play("idle")
 	elif new_state == Utils.State.FOLLOW:
 		_path = _tile_map.find_and_add_path(position, _click_position, action_points, true)
-		animated_sprite.play("idle")
+		animated_sprite.play("move")
 		if _path.size() < 2:
 			_change_state(Utils.State.IDLE)
 			return

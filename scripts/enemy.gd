@@ -92,6 +92,9 @@ func _change_state(new_state):
 		_next_point = _path[1]
 	_state = new_state 
 func _take_turn():
+	if _state == Utils.State.DYING:
+		emit_signal("exhaust")
+		return
 	_change_state(Utils.State.IDLE)
 	if player_adjacent():
 		attack()
@@ -136,10 +139,14 @@ func die():
 	baddie_sprite.play("baddie_die")
 	#await get_tree().create_timer(death_delay).timeout
 	await baddie_sprite.animation_finished
+	visible = false
+	await _tile_map.player_turn
 	position = baddie_orig_position
 	hit_points = 10
 	baddie_sprite.play("baddie_idle")
-	_change_state(Utils.State.IDLE)
+	visible = true
+	_path.clear()
+	_change_state(Utils.State.NOT_MY_TURN)
 	
 func attack():
 	_change_state(Utils.State.ATTACKING)
