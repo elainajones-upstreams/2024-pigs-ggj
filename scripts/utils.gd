@@ -16,3 +16,4 @@ static func is_adjacent(pos1, pos2, tile_map):
 		print("DISTANCE: ADjacent")
 		return true
 	return false
+

@@ -78,7 +78,6 @@ func is_point_walkable(local_position):
 		return not _astar.is_point_solid(map_position)
 	return false
 
-
 func clear_all_paths():
 	for path in _all_paths:
 		clear_path(path)
@@ -118,6 +117,7 @@ func find_path(local_start_point, local_end_point, move_distance, should_draw):
 			#set_cell(0, _end_point, Tile.END_POINT, Vector2i())
 
 	#_all_paths.append(_path)
+
 	# Redraw the lines and circles from the start to the end point.
 	if should_draw:
 		queue_redraw()
@@ -140,6 +140,7 @@ func _on_player_turn_end():
 func play_enemy_turn():
 	print("PLAYER MAP LOCATION BEFORE BREAKPOINT" + var_to_str(local_to_map(player.position)))
 	player_attack_squares()
+
 	print("ENEMY COUNT: " + var_to_str(enemies.size()))
 	print("PLAYER MAP LOCATION " + var_to_str(local_to_map(player.position)))
 	#all_enemy_turns_finished = true
@@ -207,7 +208,6 @@ func prune_path(path):
 		path.resize(path.size() - 1)
 		prune_path(path)
 	for other_path in _all_paths:
-		
 		if local_to_map(path[path.size() - 1]) == local_to_map(other_path[other_path.size() - 1]):
 			print("OVERLAP PREVENTED")
 			path.resize(path.size() - 1)
@@ -264,4 +264,3 @@ func remove_player_adjacency(pos):
 		if pos == player_adjacents[i]:
 			print("REMOVING PLAYER ADJACENCY")
 			player_adjacents.remove_at(i)
-	
