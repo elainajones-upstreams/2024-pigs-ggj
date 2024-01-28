@@ -33,6 +33,8 @@ var blocked_points = PackedVector2Array()
 var all_enemy_turns_finished = false
 var enemies : Array[Node]
 #var composite_signal = CompositeSignal.new()
+var player_map_location : Vector2i
+var player_adjacents : Array[Vector2i]
 
 func _ready():
 	enemies = get_tree().get_nodes_in_group("Enemies")
@@ -76,18 +78,24 @@ func is_point_walkable(local_position):
 		return not _astar.is_point_solid(map_position)
 	return false
 
+func clear_all_paths():
+	for path in _all_paths:
+		clear_path(path)
+	_all_paths.resize(0)
+	queue_redraw()
 
-func clear_path():
-	if not _path.is_empty():
-		_path.clear()
-		#erase_cell(0, _start_point)
-		#erase_cell(0, _end_point)
+func clear_path(path):
+	if not path.is_empty():
+		#erase_cell(0, local_to_map(path[0]))
+		#erase_cell(0, local_to_map(path[path.size() - 1]))
 		# Queue redraw to clear the lines and circles.
 		path.clear()
-		queue_redraw()
+		#queue_redraw()
 
 func find_and_add_path(local_start_point, local_end_point, move_distance, should_draw):
 	find_path(local_start_point, local_end_point, move_distance, should_draw)
+	_all_paths.append(_path)
+	return _path
 
 func find_path(local_start_point, local_end_point, move_distance, should_draw):
 
@@ -104,17 +112,17 @@ func find_path(local_start_point, local_end_point, move_distance, should_draw):
 			if _path.size() >= 2:
 				_end_point = local_to_map(_path[_path.size() - 1])
 			
-		if should_draw:
-			pass
+		#if should_draw:
 			#set_cell(0, _start_point, Tile.START_POINT, Vector2i())
 			#set_cell(0, _end_point, Tile.END_POINT, Vector2i())
 
-	_all_paths.append(_path)
+	#_all_paths.append(_path)
+
 	# Redraw the lines and circles from the start to the end point.
 	if should_draw:
 		queue_redraw()
 
-	return _path.duplicate()
+	return _path
 
 func execute_attack(attack):
 	#var targetTile = get_cell_atlas_coords(1, local_to_map(attack.center))
@@ -130,8 +138,11 @@ func _on_player_turn_end():
 	play_enemy_turn()
 
 func play_enemy_turn():
-	
+	print("PLAYER MAP LOCATION BEFORE BREAKPOINT" + var_to_str(local_to_map(player.position)))
+	player_attack_squares()
+
 	print("ENEMY COUNT: " + var_to_str(enemies.size()))
+	print("PLAYER MAP LOCATION " + var_to_str(local_to_map(player.position)))
 	#all_enemy_turns_finished = true
 	for enemy in enemies:
 		enemy.prepare_for_pathing()
@@ -165,16 +176,28 @@ func calculate_enemy_pathing(enemies):
 		if enemy.needs_pathing:
 			enemy_path = find_path(enemy.position, enemy.target, enemy.enemy_move_distance, true)
 			prune_path(enemy_path)
-			enemy._path = enemy_path
+			print("ENEMY MOVEMENT REMAINING " + var_to_str(enemy.enemy_move_distance - (enemy_path.size()-1)))
+			print ("GLORP " + var_to_str(enemy.player_adjacent()))
 			if enemy_path.size() == 0:
+				enemy_path.append(enemy.position)
+			if !Utils.is_adjacent(enemy_path[enemy_path.size() - 1], player.position, self):
+				if enemy.enemy_move_distance - (enemy_path.size()-1) > 0:
+					alternative_path_to_player(enemy, enemy_path, enemy.enemy_move_distance - (enemy_path.size()-1))
+			else:
+				remove_player_adjacency(local_to_map(enemy_path[enemy_path.size() - 1]))
+			enemy._path = enemy_path
+			if enemy_path.size() < 2:
 				enemy.cant_move == true
+				return
+			#set_cell(0, enemy_path[enemy_path.size() - 1], Tile.END_POINT, Vector2i())
+			_all_paths.append(enemy_path)
+			queue_redraw()
 			#_astar.set_point_solid(enemy_path[enemy_path.size() - 1])
 			#blocked_points.append(enemy_path[enemy_path.size() - 1])
 	#for point in blocked_points:
 		#_astar.set_point_solid(point, false)
 	#blocked_points.resize(0)
 	#emit_signal("enemy_pathing_calculated")
-	
 
 func prune_path(path):
 	print("POSITION " + var_to_str(local_to_map(player.position)))
@@ -185,7 +208,8 @@ func prune_path(path):
 		path.resize(path.size() - 1)
 		prune_path(path)
 	for other_path in _all_paths:
-		if other_path != path && path[path.size() - 1] == other_path[other_path.size() - 1]:
+		if local_to_map(path[path.size() - 1]) == local_to_map(other_path[other_path.size() - 1]):
+			print("OVERLAP PREVENTED")
 			path.resize(path.size() - 1)
 			prune_path(path)
 	for enemy in enemies:
@@ -193,4 +217,50 @@ func prune_path(path):
 			if local_to_map(path[path.size() - 1]) == local_to_map(enemy.position):
 				path.resize(path.size() - 1)
 				prune_path(path)
-	
+	return
+
+func player_attack_squares():
+	player_map_location = local_to_map(player.position)
+	player_adjacents.resize(0)
+	player_adjacents.append(Vector2i(player_map_location.x, player_map_location.y + 1))
+	player_adjacents.append(Vector2i(player_map_location.x, player_map_location.y - 1))
+	player_adjacents.append(Vector2i(player_map_location.x - 1, player_map_location.y))
+	player_adjacents.append(Vector2i(player_map_location.x + 1, player_map_location.y))
+	var remove_indices : Array[int]
+	for i in range (0, player_adjacents.size()-1):
+		if not _astar.is_in_boundsv(player_adjacents[i]) || _astar.is_point_solid(player_adjacents[i]):
+			remove_indices.append(i)
+			#player_adjacents.remove_at(i)
+		for enemy in enemies:
+			if local_to_map(enemy.position) == player_adjacents[i]:
+				remove_indices.append(i)
+				#player_adjacents.remove_at(i)
+	for index in remove_indices:
+		player_adjacents.remove_at(index)
+
+func alternative_path_to_player(enemy, current_path, movement_remaining):
+	var start_point : Vector2i
+	_astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
+	print("I AM TRYING TO GET TO THE PLAYER " + var_to_str(movement_remaining))
+	print("UPDOG " + var_to_str(player_adjacents))
+	if current_path.size() == 0:
+		current_path.append(local_to_map(enemy.position))
+		#start_point = current_path[current_path.size() - 1]
+	#start_point = local_to_map(enemy.position)
+	start_point = local_to_map(current_path[current_path.size() - 1])
+	for end_point in player_adjacents:
+		print("STARTING " + var_to_str(start_point))
+		var additional_path = _astar.get_point_path(start_point, end_point)
+		print("HERES A PATH " + var_to_str(additional_path))
+		if additional_path.size() > 1:
+			additional_path.remove_at(0)
+			if additional_path.size() <= movement_remaining:
+				current_path.append_array(additional_path)
+				remove_player_adjacency(end_point)
+				return
+
+func remove_player_adjacency(pos):
+	for i in range(0, player_adjacents.size() - 1):
+		if pos == player_adjacents[i]:
+			print("REMOVING PLAYER ADJACENCY")
+			player_adjacents.remove_at(i)

@@ -142,7 +142,7 @@ func die():
 	_change_state(Utils.State.IDLE)
 	
 func attack():
-	#_change_state(Utils.State.ATTACKING)
+	_change_state(Utils.State.ATTACKING)
 	baddie_sprite.play("baddie_attack")
 	player.on_hit(Attack.new(7, player.position))
 	await baddie_sprite.animation_finished
