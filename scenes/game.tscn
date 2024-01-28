@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://df87clr3y8vcr"]
+[gd_scene load_steps=75 format=3 uid="uid://df87clr3y8vcr"]
 
 [ext_resource type="TileSet" uid="uid://b0xakd53wyna2" path="res://tileset.tres" id="1_ywle6"]
 [ext_resource type="Script" path="res://scripts/pathfind_astar.gd" id="2_1eg46"]
@@ -69,6 +69,8 @@
 [ext_resource type="Texture2D" uid="uid://c3fxcmhev3wyx" path="res://sprites/baddie/basic_baddie/basic_baddie_attack/enemy1_attack_08.png" id="51_6m02e"]
 [ext_resource type="Texture2D" uid="uid://svv1m1o51ia6" path="res://sprites/baddie/basic_baddie/basic_baddie_attack/enemy1_attack_09.png" id="52_8q4vk"]
 [ext_resource type="AudioStream" uid="uid://bouojvkjhfb6p" path="res://sound/sfx/enemy1_death.wav" id="68_uqn1r"]
+[ext_resource type="AudioStream" uid="uid://bphohkqtea2bb" path="res://sound/sfx/enemy1_attack.wav" id="69_2l61g"]
+[ext_resource type="Script" path="res://scripts/music_player.gd" id="71_oi6ns"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_157pr"]
 animations = [{
@@ -493,6 +495,7 @@ shape = SubResource("RectangleShape2D_c5jdx")
 stream = ExtResource("68_uqn1r")
 
 [node name="baddie_attack_sound" type="AudioStreamPlayer2D" parent="Enemy"]
+stream = ExtResource("69_2l61g")
 
 [node name="Enemy2" type="CharacterBody2D" parent="." groups=["Enemies"]]
 position = Vector2(1125, 615)
@@ -508,6 +511,14 @@ animation = &"baddie_attack"
 scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_c5jdx")
 
+[node name="baddie_death_sound" type="AudioStreamPlayer2D" parent="Enemy2"]
+position = Vector2(0, -584)
+stream = ExtResource("68_uqn1r")
+
+[node name="baddie_attack_sound" type="AudioStreamPlayer2D" parent="Enemy2"]
+position = Vector2(0, -584)
+stream = ExtResource("69_2l61g")
+
 [node name="Enemy3" type="CharacterBody2D" parent="." groups=["Enemies"]]
 position = Vector2(33, 615)
 script = ExtResource("11_nhi8w")
@@ -522,10 +533,23 @@ animation = &"baddie_attack"
 scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_c5jdx")
 
+[node name="baddie_attack_sound" type="AudioStreamPlayer2D" parent="Enemy3"]
+position = Vector2(1092, -584)
+stream = ExtResource("69_2l61g")
+
+[node name="baddie_death_sound" type="AudioStreamPlayer2D" parent="Enemy3"]
+position = Vector2(1092, -584)
+stream = ExtResource("68_uqn1r")
+
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(576, 324)
 
 [node name="CompositeSignal" type="Node2D" parent="."]
 script = ExtResource("50_njvsk")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="Music_Player" type="Node2D" parent="."]
+script = ExtResource("71_oi6ns")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Music_Player"]
+
+[connection signal="finished" from="Music_Player/AudioStreamPlayer" to="Music_Player" method="play_next"]

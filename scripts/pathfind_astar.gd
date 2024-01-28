@@ -18,6 +18,7 @@ const CompositeSignal = preload("res://scripts/compositesignal.gd")
 
 @onready var player = $"../Character"
 @onready var composite_signal = $"../CompositeSignal"
+@onready var music_player = $"../Music_Player"
 
 var _turn_state = Turn_State.PLAYER_TURN
 
@@ -53,15 +54,18 @@ func _ready():
 			var pos = Vector2i(i, j)
 			if get_cell_source_id(0, pos) == Tile.OBSTACLE:
 				_astar.set_point_solid(pos)
-
+				
+	music_player._ready()
+	#music_player.play_music()
 
 func _draw():
+	print("DRAWING")
 	if _all_paths.size() == 0:
 		return
-	
 	for path in _all_paths:
 		var last_point = path[0]
 		for index in range(1, len(path)):
+			print("DRAWING_LINE")
 			var current_point = path[index]
 			draw_line(last_point, current_point, DRAW_COLOR, BASE_LINE_WIDTH, true)
 			draw_circle(current_point, BASE_LINE_WIDTH * 2.0, DRAW_COLOR)
@@ -148,11 +152,15 @@ func play_enemy_turn():
 		enemy.prepare_for_pathing()
 	#await composite_signal.finished
 	calculate_enemy_pathing(enemies)
+	var should_await = false
 	for enemy in enemies:
-		print("ENEMY STATE: " + var_to_str(enemy._state))
-		composite_signal.add_signal(enemy.exhaust)
-	emit_signal("enemy_turn")
-	await composite_signal.finished
+		if not enemy._state == Utils.State.DYING:
+			print("ENEMY STATE: " + var_to_str(enemy._state))
+			composite_signal.add_signal(enemy.exhaust)
+			should_await = true
+	if should_await:
+		emit_signal("enemy_turn")
+		await composite_signal.finished
 	clear_all_paths()
 	begin_player_turn()
 		#if enemy._state != Utils.State.EXHAUSTED:
@@ -193,7 +201,7 @@ func calculate_enemy_pathing(enemies):
 			#set_cell(0, enemy_path[enemy_path.size() - 1], Tile.END_POINT, Vector2i())
 			_all_paths.append(enemy_path)
 			enemy.needs_pathing = false
-			queue_redraw()
+		queue_redraw()
 			#_astar.set_point_solid(enemy_path[enemy_path.size() - 1])
 			#blocked_points.append(enemy_path[enemy_path.size() - 1])
 	#for point in blocked_points:

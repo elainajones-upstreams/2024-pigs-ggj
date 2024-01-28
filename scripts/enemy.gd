@@ -18,6 +18,8 @@ var _velocity = Vector2()
 @onready var _tile_map = $"../TileMap"
 @onready var player = $"../Character"
 @onready var baddie_sprite = $baddiesprite
+@onready var baddie_attack_sound = $baddie_attack_sound
+@onready var baddie_death_sound = $baddie_death_sound
 @onready var baddie_orig_position = position
 
 var _path = PackedVector2Array()
@@ -138,6 +140,7 @@ func on_hit(atk):
 func die():
 	print("ENEMY DOWN")
 	_change_state(Utils.State.DYING)
+	baddie_death_sound.play(0.0)
 	baddie_sprite.play("baddie_die")
 	#await get_tree().create_timer(death_delay).timeout
 	await baddie_sprite.animation_finished
@@ -153,11 +156,11 @@ func die():
 func attack():
 	_change_state(Utils.State.ATTACKING)
 	player.on_hit(Attack.new(7, player.position))
+	baddie_attack_sound.play(0.0)
 	baddie_sprite.play("baddie_attack")
 	await baddie_sprite.animation_finished
 	baddie_sprite.play("baddie_idle")
 	_change_state(Utils.State.EXHAUSTED)
-	
 func player_adjacent():
 	return Utils.is_adjacent(position, player.position, _tile_map)
 	#x_distance = abs(_tile_map.local_to_map(position).x - _tile_map.local_to_map(player.position).x)

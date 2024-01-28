@@ -21,8 +21,6 @@ var _velocity = Vector2()
 @onready var _tile_map = $"../TileMap"
 @onready var animated_sprite = $charactersprite
 @onready var ground_attack = $ground_attack
-@onready var baddie_attack_sound = $baddie_attack_sound
-@onready var baddie_death_sound = $baddie_death_sound
 @onready var player_orig_position = position
 var player_orig_color : Color
 
