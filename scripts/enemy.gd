@@ -7,6 +7,7 @@ const enemy_move_distance = 6
 const Attack = preload("res://scripts/attack.gd")
 const Utils = preload("res://scripts/utils.gd")
 
+signal path_ready
 signal exhaust
 
 @export var speed: float = 200.0
@@ -22,8 +23,10 @@ var _velocity = Vector2()
 var _path = PackedVector2Array()
 var _next_point = Vector2()
 var hit_points : int
-var x_distance : int
-var y_distance : int
+
+var needs_pathing = false
+var cant_move = false
+var target = Vector2()
 
 
 # Called when the node enters the scene tree for the first time.
@@ -65,34 +68,60 @@ func _move_to(local_position):
 	
 func _change_state(new_state):
 	if new_state == Utils.State.IDLE:
-		_tile_map.clear_path()
+		#_tile_map.clear_path()
 		baddie_sprite.play("baddie_idle")
 	elif new_state == Utils.State.EXHAUSTED:
-		_tile_map.clear_path()
+		#_tile_map.clear_path()
 		baddie_sprite.play("baddie_idle")
 		emit_signal("exhaust")
 		print("ENEMY_EXHAUSTED")
 	elif new_state == Utils.State.FOLLOW:
-		_path = _tile_map.find_path(position, player.position, enemy_move_distance, true)
-		if _path[_path.size() - 1] == _tile_map.get_tile_center(player.position):
-			_path.resize(_path.size() - 1)
-		baddie_sprite.play("baddie_move")
-		if _path.size() < 2:
-			_change_state(Utils.State.IDLE)
-			return
+		#needs_pathing = true
+		#emit_signal("path_ready")
+		#await _tile_map.enemy_pathing_calculated
+		#_path = _tile_map.find_path(position, player.position, enemy_move_distance, true)
+		#if _path[_path.size() - 1] == _tile_map.get_tile_center(player.position):
+			#_path.resize(_path.size() - 1)
+		#baddie_sprite.play("baddie_move")
+		#if _path.size() < 2:
+			#_change_state(Utils.State.IDLE)
+			#return
 		# The index 0 is the starting cell.
 		# We don't want the character to move back to it in this example.
+		baddie_sprite.play("baddie_move")
 		_next_point = _path[1]
-	_state = new_state
-
+	_state = new_state 
 func _take_turn():
-	
+	_change_state(Utils.State.IDLE)
 	if player_adjacent():
 		attack()
-	elif _tile_map.is_point_walkable(player.position) && _state != Utils.State.DYING:
+	elif cant_move:
+		_change_state(Utils.State.EXHAUSTED)
+		cant_move = false
+	elif _path.size() > 1 && _state != Utils.State.DYING:
+		#needs_pathing = true
+		#target = player.position
+		print("I AM APPROACHING THE PLAYER")
+		#emit_signal("path_ready")
+		#print("SIGNAL")
+		#await _tile_map.enemy_pathing_calculated
 		_change_state(Utils.State.FOLLOW)
 	else:
 		_change_state(Utils.State.EXHAUSTED)
+		
+func prepare_for_pathing():
+	if player_adjacent():
+		needs_pathing = false
+	elif _tile_map.is_point_walkable(player.position) && _state != Utils.State.DYING:
+		needs_pathing = true
+		target = player.position
+		print("I AM APPROACHING THE PLAYER")
+		#emit_signal("path_ready")
+		print("SIGNAL")
+		#await _tile_map.enemy_pathing_calculated
+		#_change_state(Utils.State.FOLLOW)
+	#else:
+		#_change_state(Utils.State.EXHAUSTED)
 
 func _return_to_idle():
 	baddie_sprite.play("baddie_idle")
@@ -113,7 +142,7 @@ func die():
 	_change_state(Utils.State.IDLE)
 	
 func attack():
-	_change_state(Utils.State.ATTACKING)
+	#_change_state(Utils.State.ATTACKING)
 	baddie_sprite.play("baddie_attack")
 	player.on_hit(Attack.new(7, player.position))
 	await baddie_sprite.animation_finished
@@ -121,10 +150,11 @@ func attack():
 	_change_state(Utils.State.EXHAUSTED)
 	
 func player_adjacent():
-	x_distance = abs(_tile_map.local_to_map(position).x - _tile_map.local_to_map(player.position).x)
-	y_distance = abs(_tile_map.local_to_map(position).y - _tile_map.local_to_map(player.position).y)
-	if x_distance + y_distance <= 1:
-		return true
+	return Utils.is_adjacent(position, player.position, _tile_map)
+	#x_distance = abs(_tile_map.local_to_map(position).x - _tile_map.local_to_map(player.position).x)
+	#y_distance = abs(_tile_map.local_to_map(position).y - _tile_map.local_to_map(player.position).y)
+	#if x_distance + y_distance <= 1:
+		#return true
 	#print("I AM CLOSE! " + var_to_str(abs(_tile_map.local_to_map(position).x - _tile_map.local_to_map(player.position).x)))
 	#_path = _tile_map.find_path(position, player.position, enemy_move_distance, true)
 

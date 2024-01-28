@@ -425,7 +425,7 @@ script = ExtResource("3_8vgae")
 position = Vector2(-1, 0)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_157pr")
-animation = &"player_exhausted"
+animation = &"idle"
 
 [node name="Enemy" type="CharacterBody2D" parent="." groups=["Enemies"]]
 position = Vector2(1125, 31)
@@ -438,6 +438,20 @@ sprite_frames = SubResource("SpriteFrames_trh50")
 animation = &"baddie_attack"
 
 [node name="baddiecollision" type="CollisionShape2D" parent="Enemy"]
+scale = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_c5jdx")
+
+[node name="Enemy2" type="CharacterBody2D" parent="." groups=["Enemies"]]
+position = Vector2(1125, 615)
+script = ExtResource("11_nhi8w")
+
+[node name="baddiesprite" type="AnimatedSprite2D" parent="Enemy2"]
+position = Vector2(-5, 2)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_trh50")
+animation = &"baddie_attack"
+
+[node name="baddiecollision" type="CollisionShape2D" parent="Enemy2"]
 scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_c5jdx")
 
