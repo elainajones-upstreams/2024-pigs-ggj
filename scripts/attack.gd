@@ -5,9 +5,16 @@ class_name Attack
 
 var damage : int
 var center : Vector2
-var area : Array[Vector2]
+var area : Array
+var animation : String
 
 func _init(dmg, cntr, ar):
 	damage = dmg
 	center = cntr
-	ar = area
+	area = ar
+	
+func copy():
+	return new(damage, center, area)
+	
+func set_center(cnt):
+	center = cnt
