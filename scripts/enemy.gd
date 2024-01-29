@@ -76,7 +76,6 @@ func _change_state(new_state):
 		#_tile_map.clear_path()
 		baddie_sprite.play("baddie_idle")
 		emit_signal("exhaust")
-		print("ENEMY_EXHAUSTED")
 	elif new_state == Utils.State.FOLLOW:
 		#needs_pathing = true
 		#emit_signal("path_ready")
@@ -107,9 +106,7 @@ func _take_turn():
 	elif _path.size() > 1 && _state != Utils.State.DYING:
 		#needs_pathing = true
 		#target = player.position
-		print("I AM APPROACHING THE PLAYER")
 		#emit_signal("path_ready")
-		#print("SIGNAL")
 		#await _tile_map.enemy_pathing_calculated
 		_change_state(Utils.State.FOLLOW)
 	else:
@@ -122,9 +119,7 @@ func prepare_for_pathing():
 	elif _tile_map.is_point_walkable(player.position) && _state != Utils.State.DYING:
 		needs_pathing = true
 		target = player.position
-		print("I AM APPROACHING THE PLAYER")
 		#emit_signal("path_ready")
-		print("SIGNAL")
 		#await _tile_map.enemy_pathing_calculated
 		#_change_state(Utils.State.FOLLOW)
 	#else:
@@ -134,12 +129,10 @@ func _return_to_idle():
 	baddie_sprite.play("baddie_idle")
 
 func on_hit(atk):
-	print("DIRECT HIT")
 	hit_points = hit_points - atk.damage
 	
 	
 func die():
-	print("ENEMY DOWN")
 	_change_state(Utils.State.DYING)
 	baddie_death_sound.play(0.0)
 	baddie_sprite.play("baddie_die")
@@ -169,7 +162,6 @@ func player_adjacent():
 	#y_distance = abs(_tile_map.local_to_map(position).y - _tile_map.local_to_map(player.position).y)
 	#if x_distance + y_distance <= 1:
 		#return true
-	#print("I AM CLOSE! " + var_to_str(abs(_tile_map.local_to_map(position).x - _tile_map.local_to_map(player.position).x)))
 	#_path = _tile_map.find_path(position, player.position, enemy_move_distance, true)
 
 	

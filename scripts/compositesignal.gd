@@ -7,10 +7,8 @@ var _remaining : int
 
 
 func add_signal(sig: Signal):
-	print("ADDING_SIGNAL")
 	_remaining += 1
 	await sig
-	print("RECEIVED SIGNAL")
 	_remaining -= 1
 	if _remaining == 0:
 		finished.emit()

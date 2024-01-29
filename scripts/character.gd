@@ -57,8 +57,6 @@ var hand = []
 
 
 func _ready():
-	#print("FUCKING FUCK OFF CONTAINER " + var_to_str(actionbar_container))
-	#print("FUCKING FUCK OFF CONTAINER " + var_to_str(action_bar_container))
 	action_bar_container = $"../actionbar-container/HFlowContainer"
 	#action_bar_container._ready()
 	#actionbar_container.position = Vector2(463, 574)
@@ -73,13 +71,11 @@ func _ready():
 	#attacks["basic"] = Attack.new(10, position, [Vector2i(0, 0)])
 	#attacks["vertical"] = Attack.new(10, position, vertical)
 	#attacks["plus"] = Attack.new(10, position, plus)
-	print("GIZZLE " + var_to_str(game))
 	#$"../".add_child(actionbar_container)
 	for i in num_actions:
 		var my_actionbar_button = actionbar_button.instantiate()
 		my_actionbar_button._ready()
 		action_bar_container.add_child(my_actionbar_button)
-		print("ATTACKGEN ACTION BAR TEXT " + var_to_str(actionbar_buttons_text))
 		my_actionbar_button.actionbar_button.action_type = actionbar_buttons_text[i]
 		my_actionbar_button.actionbar_button.text = actionbar_buttons_text[i]
 		actionbar_buttons.append(my_actionbar_button)
@@ -159,7 +155,6 @@ func _change_state(new_state):
 		# The index 0 is the starting cell.
 		# We don't want the character to move back to it in this example.
 		action_points = action_points - (_path.size() - 1)
-		print("ACTION POINTS: " + var_to_str(action_points))
 		_next_point = _path[1]
 	elif new_state == Utils.State.DYING:
 		_state = new_state
@@ -171,7 +166,6 @@ func _change_state(new_state):
 	elif new_state == Utils.State.NOT_MY_TURN:
 		animated_sprite.modulate = player_orig_color
 		animated_sprite.play("idle")
-		print("I AM ENDING MY TURN")
 	_state = new_state
 
 	
@@ -182,36 +176,28 @@ func _attack(click_position, basic):
 			current_attack = basic_attack
 			action_points = action_points - ATTACK_COST
 		else:
-			print("CLICK ATTACK " + var_to_str(_tile_map.get_tile_center(click_position)))
-			print("BEFORE ATTACK " + var_to_str(hand[selected_ability].center))
 			current_attack = hand[selected_ability]
 			current_attack.center = _tile_map.get_tile_center(click_position)
-			print("THIS IS MY ATTACK! " + var_to_str(current_attack))
-			print("AFTER ATTACK " + var_to_str(current_attack.center))
 			action_points = action_points - (ATTACK_COST * 2)
 		_tile_map.execute_attack(current_attack)
 		animated_sprite.play("player_attack")
 		ground_attack.play(0.0)
 		await animated_sprite.animation_finished
 		
-		print("Action PPoint after attack: " + var_to_str(action_points))
 		if action_points == 0:
 			_change_state(Utils.State.EXHAUSTED)
 	else:
-		print("Not enough Action Points")
 	
 func _return_to_idle():
 	animated_sprite.play("idle")
 	
 func on_hit(attack):
-	print("THAT'S GOTTA HURT")
 	hit_points = hit_points - attack.damage
 	animated_sprite.play("player_take_damage")
 	await animated_sprite.animation_finished
 	animated_sprite.play("idle")
 
 func die():
-	print("AHHH AM DEAD")
 	animated_sprite.play("player_death")
 	await animated_sprite.animation_finished
 	respawn()
@@ -226,9 +212,7 @@ func end_turn():
 	emit_signal("turn_end")
 	
 func _start_turn():
-	print("I AM STARTING MY TURN")
 	action_points = CHARACTER_ACTION_POINTS
-	print(animated_sprite.animation)
 	new_hand()
 	if animated_sprite.animation == "player_take_damage":
 		await animated_sprite.animation_finished
@@ -238,24 +222,20 @@ func cycle_attacks():
 	selected_ability = selected_ability + 1
 	if selected_ability > hand.size() - 1:
 		selected_ability = 0
-	print("SELECTED ABILITY IS " + hand[selected_ability])
 
 
 func on_pickup(pickup):
-	print("I HAVE PICKED UP AN ITEM " + var_to_str(pickup))
 	pickup_sfx.play(0.0)
 	action_points += pickup.energy
 	hit_points -= pickup.hit_dmg
 
 func select_attack(action_type: String):
-	print("ASS FUCK")
 	if hand[0].name == action_type:
 		selected_ability = 0
 	elif hand[1].name == action_type:
 		selected_ability = 1
 	elif hand[2].name == action_type:
 		selected_ability = 2
-	print("selected ability is " + var_to_str(hand[selected_ability]))
 
 func new_hand():
 	hand = []
@@ -263,10 +243,6 @@ func new_hand():
 	actionbar_buttons_text.clear()
 	for atk in hand:
 		actionbar_buttons_text.append(atk.name)
-	print("ATTACKGEN BUTTON NAMES FUCKOHO" + var_to_str(actionbar_buttons_text))
-	#print("ATTACKGEN ACTION BAR " + var_to_str(actionbar))
-	print("FUCKING FUCK OFF CONTAINER 2 " + var_to_str(actionbar_container))
-	#print("FUCKING FUCK OFF CONTAINER 2 " + var_to_str(action_bar_container))
 	refresh_action_bar()
 
 func refresh_action_bar():
@@ -276,7 +252,6 @@ func refresh_action_bar():
 		var my_actionbar_button = actionbar_button.instantiate()
 		my_actionbar_button._ready()
 		action_bar_container.add_child(my_actionbar_button)
-		print("ATTACKGEN ACTION BAR TEXT " + var_to_str(actionbar_buttons_text))
 		my_actionbar_button.actionbar_button.action_type = actionbar_buttons_text[i]
 		my_actionbar_button.actionbar_button.text = actionbar_buttons_text[i]
 		actionbar_buttons.append(my_actionbar_button)
