@@ -116,6 +116,7 @@ func _take_turn():
 		_change_state(Utils.State.EXHAUSTED)
 		
 func prepare_for_pathing():
+	needs_pathing = false
 	if player_adjacent() || _state == Utils.State.DYING:
 		needs_pathing = false
 	elif _tile_map.is_point_walkable(player.position) && _state != Utils.State.DYING:
@@ -161,6 +162,7 @@ func attack():
 	await baddie_sprite.animation_finished
 	baddie_sprite.play("baddie_idle")
 	_change_state(Utils.State.EXHAUSTED)
+	
 func player_adjacent():
 	return Utils.is_adjacent(position, player.position, _tile_map)
 	#x_distance = abs(_tile_map.local_to_map(position).x - _tile_map.local_to_map(player.position).x)

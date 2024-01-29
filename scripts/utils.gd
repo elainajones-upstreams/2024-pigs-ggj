@@ -2,7 +2,7 @@ extends Node
 class_name Utils
 
 enum State { IDLE, FOLLOW, DYING, ATTACKING, EXHAUSTED, NOT_MY_TURN }
-	
+
 #var x_distance : int
 #var y_distance : int
 
@@ -16,4 +16,6 @@ static func is_adjacent(pos1, pos2, tile_map):
 		print("DISTANCE: ADjacent")
 		return true
 	return false
+
+
 
