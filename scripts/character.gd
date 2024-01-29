@@ -223,7 +223,8 @@ func end_turn():
 func _start_turn():
 	action_points = CHARACTER_ACTION_POINTS
 	new_hand()
-	if animated_sprite.animation == "player_take_damage":
+	if (animated_sprite.animation == "player_take_damage" or 
+		animated_sprite.animation == "player_death"):
 		await animated_sprite.animation_finished
 	_change_state(Utils.State.IDLE)
 

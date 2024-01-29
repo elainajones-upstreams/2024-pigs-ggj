@@ -484,7 +484,7 @@ script = ExtResource("1_ertj7")
 position = Vector2(2, -1)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_157pr")
-animation = &"player_respawn"
+animation = &"player_death"
 
 [node name="ground_attack" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(-3, 1)
