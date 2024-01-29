@@ -44,8 +44,12 @@ func _ready():
 	player.turn_end.connect(_on_player_turn_end)
 	spawn_good_pickup(map_to_local(Vector2i(4, 0)))
 	spawn_good_pickup(map_to_local(Vector2i(15, 5)))
+	spawn_good_pickup(map_to_local(Vector2i(15, 0)))
+	spawn_good_pickup(map_to_local(Vector2i(1, 7)))
 	spawn_bad_pickup(map_to_local(Vector2i(6, 5)))
 	spawn_bad_pickup(map_to_local(Vector2i(17, 4)))
+	spawn_bad_pickup(map_to_local(Vector2i(11, 6)))
+	spawn_bad_pickup(map_to_local(Vector2i(12, 0)))
 	#composite_signal.finished.connect(begin_player_turn)
 	_astar.region = get_used_rect()
 	_astar.cell_size = CELL_SIZE
