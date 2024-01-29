@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=3 uid="uid://df87clr3y8vcr"]
+[gd_scene load_steps=92 format=3 uid="uid://df87clr3y8vcr"]
 
 [ext_resource type="TileSet" uid="uid://b0xakd53wyna2" path="res://tileset.tres" id="1_ywle6"]
 [ext_resource type="Script" path="res://scripts/pathfind_astar.gd" id="2_1eg46"]
@@ -43,6 +43,7 @@
 [ext_resource type="AudioStream" uid="uid://b5ejxgh23drr" path="res://sound/sfx/protag_attack_groundstrike.wav" id="42_vln8a"]
 [ext_resource type="Texture2D" uid="uid://dnaatxnfov3pi" path="res://sprites/baddie/basic_baddie/basic_baddie_death/enemy1_death18.png" id="43_6wdpg"]
 [ext_resource type="Texture2D" uid="uid://duq1pkmpg6r65" path="res://sprites/baddie/basic_baddie/basic_baddie_attack/enemy1_attack_00.png" id="43_hxtuu"]
+[ext_resource type="AudioStream" uid="uid://dgni5b7wmh28m" path="res://sound/sfx/SFX_Pickup_45.wav" id="43_kf5l7"]
 [ext_resource type="Texture2D" uid="uid://cjuvyn7onta0d" path="res://sprites/baddie/basic_baddie/basic_baddie_death/enemy1_death19.png" id="44_udxvy"]
 [ext_resource type="Texture2D" uid="uid://bpixh7wclduok" path="res://sprites/baddie/basic_baddie/basic_baddie_attack/enemy1_attack_01.png" id="44_vlgy8"]
 [ext_resource type="Texture2D" uid="uid://t2voim4h1d8g" path="res://sprites/baddie/basic_baddie/basic_baddie_attack/enemy1_attack_02.png" id="45_2vt4a"]
@@ -506,6 +507,9 @@ visibility_layer = 2
 position = Vector2(-3, 0)
 scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_33vo5")
+
+[node name="pickup_sfx" type="AudioStreamPlayer2D" parent="Character"]
+stream = ExtResource("43_kf5l7")
 
 [node name="Enemy" type="CharacterBody2D" parent="." groups=["Enemies"]]
 position = Vector2(1125, 31)
