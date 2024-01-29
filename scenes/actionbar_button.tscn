@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://bi6sjwgfx8s1o"]
+
+[ext_resource type="Script" path="res://scripts/actionbar-button.gd" id="1_7ep27"]
+[ext_resource type="Script" path="res://scripts/actionbar_button2.gd" id="1_n07u8"]
+
+[node name="actionbar-button" type="Control" node_paths=PackedStringArray("actionbar_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_n07u8")
+actionbar_button = NodePath("CenterContainer/Button")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" type="Button" parent="CenterContainer"]
+layout_mode = 2
+text = " * "
+icon_alignment = 1
+script = ExtResource("1_7ep27")
+
+[connection signal="actionbar_button_pressed" from="CenterContainer/Button" to="." method="_on_actionbar_button_pressed" binds= ["action_type"]]
