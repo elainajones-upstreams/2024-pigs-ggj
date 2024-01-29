@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://b1pdrg4io0joc"]
-
-[ext_resource type="Script" path="res://scripts/row.gd" id="1_64ks2"]
-
-[node name="row" type="HBoxContainer"]
-script = ExtResource("1_64ks2")

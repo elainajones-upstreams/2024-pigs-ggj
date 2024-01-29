@@ -62,9 +62,7 @@ func _ready():
 	#actionbar_container.position = Vector2(463, 574)
 	#actionbar_container.size = Vector2(251, 41)
 	basic_attack.animation = "basic_attack"
-	hit_points = CHARACTER_MAX_HP
-	action_points = CHARACTER_ACTION_POINTS
-	_change_state(Utils.State.IDLE)
+	_change_state(Utils.State.RESPAWNING)
 	player_orig_color = animated_sprite.modulate
 	animated_sprite.animation_finished.connect(_return_to_idle)
 	_tile_map.player_turn.connect(_start_turn)
@@ -90,8 +88,10 @@ func _process(_delta):
 		_change_state(Utils.State.DYING)
 	if action_points <= 0 && _state == Utils.State.IDLE:
 		_change_state(Utils.State.EXHAUSTED)
-	if _state != Utils.State.FOLLOW:
-		return
+	if _state == Utils.State.FOLLOW:
+		character_follow()
+
+func character_follow():
 	var arrived_to_next_point = _move_to(_next_point)
 	if arrived_to_next_point:
 		_path.remove_at(0)
@@ -101,8 +101,9 @@ func _process(_delta):
 			return
 		_next_point = _path[0]
 
-
 func _unhandled_input(event):
+	if event.is_action_pressed(&"quit"):
+		get_tree().quit()
 	if _state == Utils.State.IDLE:
 		_click_position = get_global_mouse_position()
 		if _tile_map.is_point_walkable(_click_position):
@@ -141,7 +142,6 @@ func _move_to(local_position):
 	
 	return position.distance_to(local_position) < ARRIVE_DISTANCE
 
-
 func _change_state(new_state):
 	if new_state == Utils.State.IDLE:
 		_tile_map.clear_all_paths()
@@ -159,6 +159,10 @@ func _change_state(new_state):
 	elif new_state == Utils.State.DYING:
 		_state = new_state
 		die()
+		return
+	elif new_state == Utils.State.RESPAWNING:
+		_state = new_state
+		respawn()
 		return
 	elif new_state == Utils.State.EXHAUSTED:
 		animated_sprite.modulate = Color(0, 1, 0)
@@ -191,7 +195,7 @@ func _attack(click_position, basic):
 	
 func _return_to_idle():
 	animated_sprite.play("idle")
-	
+
 func on_hit(attack):
 	hit_points = hit_points - attack.damage
 	animated_sprite.play("player_take_damage")
@@ -206,7 +210,11 @@ func die():
 func respawn():
 	position = player_orig_position
 	hit_points = CHARACTER_MAX_HP
-	_change_state(Utils.State.IDLE)
+	action_points = CHARACTER_ACTION_POINTS
+	animated_sprite.play("player_respawn")
+	await animated_sprite.animation_finished
+	_state = Utils.State.IDLE
+	animated_sprite.play("idle")
 	
 func end_turn():
 	_change_state(Utils.State.NOT_MY_TURN)
@@ -215,7 +223,8 @@ func end_turn():
 func _start_turn():
 	action_points = CHARACTER_ACTION_POINTS
 	new_hand()
-	if animated_sprite.animation == "player_take_damage":
+	if (animated_sprite.animation == "player_take_damage" or 
+		animated_sprite.animation == "player_death"):
 		await animated_sprite.animation_finished
 	_change_state(Utils.State.IDLE)
 
@@ -223,7 +232,6 @@ func cycle_attacks():
 	selected_ability = selected_ability + 1
 	if selected_ability > hand.size() - 1:
 		selected_ability = 0
-
 
 func on_pickup(pickup):
 	pickup_sfx.play(0.0)
