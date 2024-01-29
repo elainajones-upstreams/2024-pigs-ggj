@@ -1,4 +1,4 @@
-[gd_scene load_steps=90 format=3 uid="uid://df87clr3y8vcr"]
+[gd_scene load_steps=91 format=3 uid="uid://df87clr3y8vcr"]
 
 [ext_resource type="TileSet" uid="uid://b0xakd53wyna2" path="res://tileset.tres" id="1_ywle6"]
 [ext_resource type="Script" path="res://scripts/pathfind_astar.gd" id="2_1eg46"]
@@ -73,6 +73,7 @@
 [ext_resource type="Texture2D" uid="uid://xsq5jni61jcq" path="res://sprites/baddie/basic_baddie/basic_baddie_death_enhanced/enemy1_death_12.png" id="66_fnd1e"]
 [ext_resource type="Texture2D" uid="uid://18cq8afgr40d" path="res://sprites/baddie/basic_baddie/basic_baddie_death_enhanced/enemy1_death_13.png" id="67_bh5da"]
 [ext_resource type="Texture2D" uid="uid://du473k7oapi5s" path="res://sprites/baddie/basic_baddie/basic_baddie_death_enhanced/enemy1_death_14.png" id="68_8qucn"]
+[ext_resource type="PackedScene" path="res://scenes/actionbar.tscn" id="68_8vymh"]
 [ext_resource type="AudioStream" uid="uid://bouojvkjhfb6p" path="res://sound/sfx/enemy1_death.wav" id="68_uqn1r"]
 [ext_resource type="AudioStream" uid="uid://bphohkqtea2bb" path="res://sound/sfx/enemy1_attack.wav" id="69_2l61g"]
 [ext_resource type="Texture2D" uid="uid://dnaytmjd1wt4b" path="res://sprites/baddie/basic_baddie/basic_baddie_death_enhanced/enemy1_death_15.png" id="69_aodkt"]
@@ -738,3 +739,14 @@ script = ExtResource("50_njvsk")
 script = ExtResource("71_oi6ns")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Music_Player"]
+
+[node name="actionbar-container" type="PanelContainer" parent="."]
+offset_left = 463.0
+offset_top = 574.0
+offset_right = 714.0
+offset_bottom = 615.0
+
+[node name="actionbar" parent="actionbar-container" instance=ExtResource("68_8vymh")]
+layout_mode = 2
+
+[connection signal="finished" from="Music_Player/AudioStreamPlayer" to="Music_Player" method="play_next"]
