@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var actionbar: Control
+#@export var actionbar: Control
 
 const MASS = 5.0
 const ARRIVE_DISTANCE = 10.0
@@ -15,23 +15,37 @@ const plus = [Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0), Vector2i(-1, 0), 
 signal turn_end
 
 @export var speed: float = 200.0
+var num_actions: int = 3
 var player_movement = 5
 
 var _state = Utils.State.IDLE
 var _velocity = Vector2()
 
 @onready var _tile_map = $"../TileMap"
+@onready var game = $".."
 @onready var animated_sprite = $charactersprite
 @onready var ground_attack = $ground_attack
+var action_bar_container
+#@onready var actionbar_container = $"../actionbar-container/HFlowContainer"
+#@onready var actionbar_container = $"PanelContainer/HFlowContainer"
 @onready var player_orig_position = position
-@onready var basic_attack = Attack.new(10, position, [Vector2i(0, 0)])
+@onready var basic_attack = Attack.new(10, position, [Vector2i(0, 0)], "Basic Attack")
+#@onready var action_bar = $"../../actionbar-container/actionbar"
+
+var actionbar_button = preload("res://scenes/actionbar_button.tscn")
+var actionbar_scene = preload("res://scenes/actionbar.tscn")
+
+var actionbar_container
+
+var actionbar_buttons: Array
+var actionbar_buttons_text: Array = ["vertical", "plus", "why"]
 
 var player_orig_color : Color
 
 var _click_position = Vector2()
 var _path = PackedVector2Array()
 var _next_point = Vector2()
-var attacks = {}
+#var attacks = {}
 
 var hit_points : int
 var action_points : int
@@ -42,7 +56,12 @@ var hand = []
 
 
 func _ready():
-	Attack.draw_hand(self)
+	#print("FUCKING FUCK OFF CONTAINER " + var_to_str(actionbar_container))
+	#print("FUCKING FUCK OFF CONTAINER " + var_to_str(action_bar_container))
+	action_bar_container = $"../actionbar-container/HFlowContainer"
+	#action_bar_container._ready()
+	#actionbar_container.position = Vector2(463, 574)
+	#actionbar_container.size = Vector2(251, 41)
 	basic_attack.animation = "basic_attack"
 	hit_points = CHARACTER_MAX_HP
 	action_points = CHARACTER_ACTION_POINTS
@@ -51,10 +70,21 @@ func _ready():
 	animated_sprite.animation_finished.connect(_return_to_idle)
 	_tile_map.player_turn.connect(_start_turn)
 	#attacks["basic"] = Attack.new(10, position, [Vector2i(0, 0)])
-	attacks["vertical"] = Attack.new(10, position, vertical)
-	attacks["plus"] = Attack.new(10, position, plus)
-	
-	actionbar.actionbar_container_button_pressed.connect(select_attack)
+	#attacks["vertical"] = Attack.new(10, position, vertical)
+	#attacks["plus"] = Attack.new(10, position, plus)
+	print("GIZZLE " + var_to_str(game))
+	#$"../".add_child(actionbar_container)
+	for i in num_actions:
+		var my_actionbar_button = actionbar_button.instantiate()
+		my_actionbar_button._ready()
+		action_bar_container.add_child(my_actionbar_button)
+		print("ATTACKGEN ACTION BAR TEXT " + var_to_str(actionbar_buttons_text))
+		my_actionbar_button.actionbar_button.action_type = actionbar_buttons_text[i]
+		my_actionbar_button.actionbar_button.text = actionbar_buttons_text[i]
+		actionbar_buttons.append(my_actionbar_button)
+		my_actionbar_button.actionbar_button_pressed2.connect(select_attack)
+	new_hand()
+	#actionbar.actionbar_container_button_pressed.connect(select_attack)
 
 func _process(_delta):
 	#if _state == Utils.State.NOT_MY_TURN:
@@ -85,10 +115,10 @@ func _unhandled_input(event):
 			if event.is_action_pressed(&"move_to"):
 				_change_state(Utils.State.FOLLOW)
 		if event.is_action_pressed(&"attack"):
-			_attack(_click_position, "basic")
+			_attack(_click_position, true)
 			_tile_map.player_attack_squares()
 		if event.is_action_pressed(&"aoe_attack"):
-			_attack(_click_position, attacks.keys()[selected_ability])
+			_attack(_click_position, false)
 			_tile_map.player_attack_squares()
 		if event.is_action_pressed(&"cycle_attacks"):
 			cycle_attacks()
@@ -142,24 +172,27 @@ func _change_state(new_state):
 		animated_sprite.play("idle")
 		print("I AM ENDING MY TURN")
 	_state = new_state
+
 	
-func _attack(click_position, attackName):
-	if action_points >= ATTACK_COST:
-		if attackName == "basic":
+func _attack(click_position, basic):
+	if basic && action_points >= ATTACK_COST || !basic && action_points >= ATTACK_COST * 2:
+		if basic:
 			basic_attack.center = _tile_map.get_tile_center(click_position)
 			current_attack = basic_attack
+			action_points = action_points - ATTACK_COST
 		else:
 			print("CLICK ATTACK " + var_to_str(_tile_map.get_tile_center(click_position)))
-			print("BEFORE ATTACK " + var_to_str(attacks[attackName].center))
-			current_attack = attacks[attackName]
+			print("BEFORE ATTACK " + var_to_str(hand[selected_ability].center))
+			current_attack = hand[selected_ability]
 			current_attack.center = _tile_map.get_tile_center(click_position)
 			print("THIS IS MY ATTACK! " + var_to_str(current_attack))
 			print("AFTER ATTACK " + var_to_str(current_attack.center))
+			action_points = action_points - (ATTACK_COST * 2)
 		_tile_map.execute_attack(current_attack)
 		animated_sprite.play("player_attack")
 		ground_attack.play(0.0)
 		await animated_sprite.animation_finished
-		action_points = action_points - ATTACK_COST
+		
 		print("Action PPoint after attack: " + var_to_str(action_points))
 		if action_points == 0:
 			_change_state(Utils.State.EXHAUSTED)
@@ -195,15 +228,16 @@ func _start_turn():
 	print("I AM STARTING MY TURN")
 	action_points = CHARACTER_ACTION_POINTS
 	print(animated_sprite.animation)
+	new_hand()
 	if animated_sprite.animation == "player_take_damage":
 		await animated_sprite.animation_finished
 	_change_state(Utils.State.IDLE)
 
 func cycle_attacks():
 	selected_ability = selected_ability + 1
-	if selected_ability > attacks.size() - 1:
+	if selected_ability > hand.size() - 1:
 		selected_ability = 0
-	print("SELECTED ABILITY IS " + attacks.keys()[selected_ability])
+	print("SELECTED ABILITY IS " + hand[selected_ability])
 
 
 func on_pickup(pickup):
@@ -212,10 +246,37 @@ func on_pickup(pickup):
 	hit_points -= pickup.hit_dmg
 
 func select_attack(action_type: String):
-	match(action_type):
-		"vertical":
-			selected_ability = 0
-		"plus":
-			selected_ability = 1
-	print("selected ability is " + attacks.keys()[selected_ability])
+	print("ASS FUCK")
+	if hand[0].name == action_type:
+		selected_ability = 0
+	elif hand[1].name == action_type:
+		selected_ability = 1
+	elif hand[2].name == action_type:
+		selected_ability = 2
+	print("selected ability is " + var_to_str(hand[selected_ability]))
 
+func new_hand():
+	hand = []
+	Attack.draw_hand(self)
+	actionbar_buttons_text.clear()
+	for atk in hand:
+		actionbar_buttons_text.append(atk.name)
+	print("ATTACKGEN BUTTON NAMES FUCKOHO" + var_to_str(actionbar_buttons_text))
+	#print("ATTACKGEN ACTION BAR " + var_to_str(actionbar))
+	print("FUCKING FUCK OFF CONTAINER 2 " + var_to_str(actionbar_container))
+	#print("FUCKING FUCK OFF CONTAINER 2 " + var_to_str(action_bar_container))
+	refresh_action_bar()
+
+func refresh_action_bar():
+	for n in action_bar_container.get_children():
+		action_bar_container.remove_child(n)
+	for i in num_actions:
+		var my_actionbar_button = actionbar_button.instantiate()
+		my_actionbar_button._ready()
+		action_bar_container.add_child(my_actionbar_button)
+		print("ATTACKGEN ACTION BAR TEXT " + var_to_str(actionbar_buttons_text))
+		my_actionbar_button.actionbar_button.action_type = actionbar_buttons_text[i]
+		my_actionbar_button.actionbar_button.text = actionbar_buttons_text[i]
+		actionbar_buttons.append(my_actionbar_button)
+		my_actionbar_button.actionbar_button_pressed2.connect(select_attack)
+	
