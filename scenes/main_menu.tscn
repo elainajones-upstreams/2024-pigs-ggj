@@ -1,0 +1,96 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqx6kmelu3hd0"]
+
+[ext_resource type="Script" path="res://scripts/main-menu.gd" id="1_vxrmn"]
+[ext_resource type="Texture2D" uid="uid://b45dqqfi5kkf4" path="res://sprites/tiles/biomech_background_tile.png" id="2_w2046"]
+[ext_resource type="Theme" uid="uid://c3o700xprp4kx" path="res://fonts/game_text.tres" id="3_gt7to"]
+
+[node name="main-menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_vxrmn")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="right-picture" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("2_w2046")
+expand_mode = 5
+
+[node name="top-text" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 421.0
+offset_top = 147.0
+offset_right = 1409.0
+offset_bottom = 605.0
+rotation = 0.557087
+theme = ExtResource("3_gt7to")
+text = "mycomancer"
+
+[node name="bottom-text" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 91.0
+offset_top = 361.0
+offset_right = 1079.0
+offset_bottom = 543.0
+rotation = -0.159076
+theme = ExtResource("3_gt7to")
+theme_override_colors/default_color = Color(0, 0.27451, 1, 1)
+theme_override_font_sizes/normal_font_size = 48
+text = "push button vvv"
+
+[node name="buttons" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 383.0
+offset_top = 361.0
+offset_right = 760.0
+offset_bottom = 563.0
+
+[node name="PanelContainer" type="PanelContainer" parent="buttons"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="buttons/PanelContainer"]
+layout_mode = 2
+
+[node name="start-game" type="Button" parent="buttons/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "start game"
+
+[node name="credits" type="Button" parent="buttons/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "credits"
+
+[node name="options" type="Button" parent="buttons/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "options"
+
+[node name="quit" type="Button" parent="buttons/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "quit"
+
+[connection signal="pressed" from="buttons/PanelContainer/VBoxContainer/start-game" to="." method="_on_startgame_pressed"]
+[connection signal="pressed" from="buttons/PanelContainer/VBoxContainer/credits" to="." method="_on_credits_pressed"]
+[connection signal="pressed" from="buttons/PanelContainer/VBoxContainer/options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="buttons/PanelContainer/VBoxContainer/quit" to="." method="_on_quit_pressed"]
