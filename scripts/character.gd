@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-
+@export var actionbar: Control
 
 const MASS = 5.0
 const ARRIVE_DISTANCE = 10.0
@@ -51,6 +51,8 @@ func _ready():
 	#attacks["basic"] = Attack.new(10, position, [Vector2i(0, 0)])
 	attacks["vertical"] = Attack.new(10, position, vertical)
 	attacks["plus"] = Attack.new(10, position, plus)
+	
+	actionbar.actionbar_container_button_pressed.connect(select_attack)
 
 func _process(_delta):
 	#if _state == Utils.State.NOT_MY_TURN:
@@ -200,3 +202,12 @@ func cycle_attacks():
 	if selected_ability > attacks.size() - 1:
 		selected_ability = 0
 	print("SELECTED ABILITY IS " + attacks.keys()[selected_ability])
+
+func select_attack(action_type: String):
+	match(action_type):
+		"vertical":
+			selected_ability = 0
+		"plus":
+			selected_ability = 1
+	print("selected ability is " + attacks.keys()[selected_ability])
+	
