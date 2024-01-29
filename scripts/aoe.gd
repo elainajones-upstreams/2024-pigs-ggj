@@ -11,7 +11,7 @@ var attack : Attack
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("AOE CREATED")
-	position = attack.center
+	#position = attack.center
 	aoe()
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -19,7 +19,7 @@ func _ready():
 	#pass
 
 func aoe():
-	$aoeAnimation.play("aoe")
+	$aoeAnimation.play(attack.animation)
 	await get_tree().create_timer(damage_delay_time).timeout
 	var targets = get_overlapping_bodies()
 	for target in targets:

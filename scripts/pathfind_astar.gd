@@ -11,6 +11,7 @@ signal enemy_pathing_calculated
 const CELL_SIZE = Vector2(64, 64)
 const BASE_LINE_WIDTH = 1.5
 const DRAW_COLOR = Color.WHITE
+const AOE_CELL_DRAW_DELAY = 0.2
 const AOE = preload("res://scenes/aoe.tscn")
 const Utils = preload("res://scripts/utils.gd")
 const CompositeSignal = preload("res://scripts/compositesignal.gd")
@@ -150,9 +151,25 @@ func find_path(local_start_point, local_end_point, move_distance, should_draw):
 
 func execute_attack(attack):
 	#var targetTile = get_cell_atlas_coords(1, local_to_map(attack.center))
-	var aoe_instance = AOE.instantiate()
-	aoe_instance.attack = attack
-	add_child(aoe_instance)
+	#var aoes = []
+	var aoe_instance
+	print("EXECUTING_ATTACK " + var_to_str(attack))
+	if attack.animation == "":
+			attack.animation = "aoe"
+	if attack.area.size() > 1:
+		print("AOE ATTACK " + var_to_str(attack))
+		for tile in attack.area:
+			aoe_instance= AOE.instantiate()
+			aoe_instance.attack = attack
+			aoe_instance.position = map_to_local(local_to_map(attack.center) + tile)
+			add_child(aoe_instance)
+			await get_tree().create_timer(AOE_CELL_DRAW_DELAY).timeout
+	else:
+		aoe_instance = AOE.instantiate()
+		aoe_instance.attack = attack
+		aoe_instance.position = attack.center
+		#aoes.append(aoe_instance)	
+		add_child(aoe_instance)
 	
 func get_tile_center(vector):
 	return map_to_local(local_to_map(vector))
