@@ -1,7 +1,7 @@
 extends Button
 
-var attack_type: String
+var action_type: String
 signal actionbar_button_pressed(action_type: String)
 
-func _on_pressed(attack_type: String):
-	actionbar_button_pressed.emit(attack_type)
+func _on_pressed():
+	actionbar_button_pressed.emit(action_type)

@@ -67,6 +67,8 @@ func _ready():
 				
 	music_player._ready()
 	#music_player.play_music()
+	
+	
 
 func _draw():
 	print("DRAWING")
