@@ -5,9 +5,8 @@ var fading_out = false
 
 var next_level = 0
 enum NEXT_LEVEL { GAME    = 1, 
-				  CREDITS = 2, 
-				  QUIT    = 3, 
-				  OPTIONS = 4 }
+				  CREDITS = 2,  
+				  OPTIONS = 3 }
 
 var texture_modulate: float
 
@@ -38,8 +37,6 @@ func switch_scene():
 		get_tree().change_scene_to_file("scenes/credits.tscn")
 	if next_level == NEXT_LEVEL.OPTIONS:
 		pass
-	if next_level == NEXT_LEVEL.QUIT:
-		get_tree().quit()
 
 func _on_startgame_pressed():
 	next_level = NEXT_LEVEL.GAME
@@ -58,6 +55,4 @@ func _on_options_pressed():
 	#fading_out = true #uncomment when options screen added
 
 func _on_quit_pressed():
-	next_level = NEXT_LEVEL.QUIT
-	fading_in = false
-	fading_out = true
+	get_tree().quit()
