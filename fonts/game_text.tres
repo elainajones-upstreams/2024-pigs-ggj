@@ -1,0 +1,10 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://c3o700xprp4kx"]
+
+[ext_resource type="FontFile" uid="uid://c2vpmkrshwxwi" path="res://fonts/alphbeta.ttf" id="1_k4pu7"]
+
+[resource]
+RichTextLabel/colors/default_color = Color(0, 1, 1, 1)
+RichTextLabel/colors/font_outline_color = Color(0, 0, 0, 1)
+RichTextLabel/font_sizes/bold_font_size = 24
+RichTextLabel/font_sizes/normal_font_size = 24
+RichTextLabel/fonts/normal_font = ExtResource("1_k4pu7")
