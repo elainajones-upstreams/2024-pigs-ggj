@@ -437,19 +437,19 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("95_r1qqb")
 }],
-"loop": true,
+"loop": false,
 "name": &"player_respawn",
-"speed": 5.0
+"speed": 9.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_rp7k8")
+"texture": ExtResource("26_berhk")
 }, {
 "duration": 1.0,
 "texture": null
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_vmkbs")
+"texture": ExtResource("93_rntf0")
 }, {
 "duration": 1.0,
 "texture": null
@@ -462,30 +462,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("5_f1y7a")
-}, {
-"duration": 1.0,
-"texture": null
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_wj5lv")
-}, {
-"duration": 1.0,
-"texture": null
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_3gew5")
-}, {
-"duration": 1.0,
-"texture": null
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_1ok00")
-}, {
-"duration": 1.0,
-"texture": null
-}, {
-"duration": 1.0,
-"texture": ExtResource("9_hc3jq")
 }, {
 "duration": 1.0,
 "texture": null
@@ -508,7 +484,7 @@ script = ExtResource("1_ertj7")
 position = Vector2(2, -1)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_157pr")
-animation = &"player_death"
+animation = &"player_respawn"
 
 [node name="ground_attack" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(-3, 1)

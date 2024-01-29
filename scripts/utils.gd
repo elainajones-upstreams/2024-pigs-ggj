@@ -1,7 +1,7 @@
 extends Node
 class_name Utils
 
-enum State { IDLE, FOLLOW, DYING, ATTACKING, EXHAUSTED, NOT_MY_TURN }
+enum State { IDLE, FOLLOW, DYING, ATTACKING, EXHAUSTED, NOT_MY_TURN, RESPAWNING }
 
 #var x_distance : int
 #var y_distance : int

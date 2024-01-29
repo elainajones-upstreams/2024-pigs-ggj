@@ -73,8 +73,6 @@ func _ready():
 				
 	music_player._ready()
 	#music_player.play_music()
-	
-	
 
 func _draw():
 	if _all_paths.size() == 0:
