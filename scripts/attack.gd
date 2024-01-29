@@ -40,10 +40,10 @@ static func draw_hand(player):
 	print("ATTACKGEN GENERATIN PLAYER HAND")
 	player.hand.append(get_random())
 	player.hand.append(get_random())
-	if rng.randf() >= 0.0:
+	if rng.randf() >= 0.8:
 		player.hand.append(get_chaos_snake())
 	else:
-		player.hand.append(get_random)
+		player.hand.append(get_random())
 	print("ATTACKGEN NEW PLAYER HAND " + var_to_str(player.hand))
 	print("ATTACKGEN NEW PLAYER HAND SIZE " + var_to_str(player.hand.size()))
 		
