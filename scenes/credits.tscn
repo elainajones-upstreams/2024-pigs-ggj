@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://4xd60ad2wrtk"]
+[gd_scene load_steps=4 format=3 uid="uid://d2vxefgagcqvp"]
 
 [ext_resource type="Script" path="res://scripts/tutorial.gd" id="1_3u12v"]
 [ext_resource type="Texture2D" uid="uid://b45dqqfi5kkf4" path="res://sprites/tiles/biomech_background_tile.png" id="2_8hc16"]
