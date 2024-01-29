@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://ce10rmf85yu8w"]
+[gd_scene load_steps=4 format=3 uid="uid://ciqi3nmm3o4ko"]
 
 [ext_resource type="Script" path="res://scripts/tutorial.gd" id="1_x60y5"]
-[ext_resource type="Texture2D" uid="uid://b45dqqfi5kkf4" path="res://sprites/tiles/biomech_background_tile.png" id="2_rvqcf"]
 [ext_resource type="Texture2D" uid="uid://b20jfcfgfr5ar" path="res://sprites/ui/myco panel long.png" id="3_5xfpo"]
 [ext_resource type="Theme" uid="uid://c3o700xprp4kx" path="res://fonts/game_text.tres" id="4_h4cuf"]
 
@@ -15,27 +14,6 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_x60y5")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 0
-
-[node name="left-picture" type="TextureRect" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-texture = ExtResource("2_rvqcf")
-expand_mode = 5
-
-[node name="right-picture" type="TextureRect" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-texture = ExtResource("2_rvqcf")
-expand_mode = 5
 
 [node name="MycoPanelLong" type="Sprite2D" parent="."]
 position = Vector2(584, 473.5)

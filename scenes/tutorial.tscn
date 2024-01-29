@@ -1,8 +1,24 @@
-[gd_scene load_steps=10 format=3 uid="uid://cxvejkihle64n"]
+[gd_scene load_steps=11 format=3 uid="uid://cxvejkihle64n"]
 
 [ext_resource type="Script" path="res://scripts/tutorial.gd" id="1_bnms3"]
 [ext_resource type="Texture2D" uid="uid://b45dqqfi5kkf4" path="res://sprites/tiles/biomech_background_tile.png" id="1_g38ej"]
 [ext_resource type="Theme" uid="uid://c3o700xprp4kx" path="res://fonts/game_text.tres" id="3_bb5t1"]
+[ext_resource type="PackedScene" uid="uid://ciqi3nmm3o4ko" path="res://scenes/tutorial2.tscn" id="4_djr5u"]
+
+[sub_resource type="Animation" id="Animation_odhwk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(706, 708)]
+}
 
 [sub_resource type="Animation" id="Animation_xlejb"]
 resource_name = "idle"
@@ -21,25 +37,25 @@ tracks/0/keys = {
 "values": [Vector2(706, 708), Vector2(472, 149)]
 }
 
-[sub_resource type="Animation" id="Animation_odhwk"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3pvjx"]
+_data = {
+"RESET": SubResource("Animation_odhwk"),
+"idle": SubResource("Animation_xlejb")
+}
+
+[sub_resource type="Animation" id="Animation_obmjs"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
+tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(706, 708)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_3pvjx"]
-_data = {
-"RESET": SubResource("Animation_odhwk"),
-"idle": SubResource("Animation_xlejb")
+"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_2a1hx"]
@@ -56,21 +72,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.2), Color(1, 1, 1, 0.4), Color(1, 1, 1, 0.6), Color(1, 1, 1, 0.8), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_obmjs"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_f3f32"]
@@ -123,6 +124,7 @@ libraries = {
 autoplay = "idle"
 
 [node name="top-text" type="RichTextLabel" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 89.0
 offset_top = 118.0
@@ -137,6 +139,7 @@ But in order to heal Celia and protect humanity, Devi must first survive the fun
 "
 
 [node name="bottom-text" type="RichTextLabel" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 89.0
 offset_top = 394.0
@@ -149,6 +152,9 @@ text = "Click to move
 Right click to attack
 Middle click to super attack
 Spacebar to end turn"
+
+[node name="tutorial" parent="." instance=ExtResource("4_djr5u")]
+layout_mode = 1
 
 [node name="retroFadeIn" type="AnimationPlayer" parent="."]
 libraries = {
