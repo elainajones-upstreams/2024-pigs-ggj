@@ -24,6 +24,7 @@ var _velocity = Vector2()
 @onready var _tile_map = $"../TileMap"
 @onready var game = $".."
 @onready var animated_sprite = $charactersprite
+@onready var pickup_sfx = $pickup_sfx
 @onready var ground_attack = $ground_attack
 var action_bar_container
 #@onready var actionbar_container = $"../actionbar-container/HFlowContainer"
@@ -242,6 +243,7 @@ func cycle_attacks():
 
 func on_pickup(pickup):
 	print("I HAVE PICKED UP AN ITEM " + var_to_str(pickup))
+	pickup_sfx.play(0.0)
 	action_points += pickup.energy
 	hit_points -= pickup.hit_dmg
 
