@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://d2vxefgagcqvp"]
+[gd_scene load_steps=3 format=3 uid="uid://cue5xrox33f8w"]
 
 [ext_resource type="Script" path="res://scripts/credits.gd" id="1_su7gx"]
-[ext_resource type="Texture2D" uid="uid://b45dqqfi5kkf4" path="res://sprites/tiles/biomech_background_tile.png" id="2_8hc16"]
-[ext_resource type="Theme" uid="uid://c3o700xprp4kx" path="res://fonts/game_text.tres" id="3_f74lm"]
+[ext_resource type="Texture2D" uid="uid://47iuv4snucnv" path="res://sprites/credits.png" id="2_cw0oa"]
 
 [node name="credits" type="Control"]
 layout_mode = 3
@@ -27,31 +26,5 @@ theme_override_constants/separation = 0
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("2_8hc16")
+texture = ExtResource("2_cw0oa")
 expand_mode = 5
-
-[node name="TextureRect2" type="TextureRect" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-texture = ExtResource("2_8hc16")
-expand_mode = 5
-
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
-layout_mode = 0
-offset_left = 89.0
-offset_top = 94.0
-offset_right = 1077.0
-offset_bottom = 576.0
-theme = ExtResource("3_f74lm")
-text = "Celia is a super cool lady who woke up one day in the arms of
-a weird mushroom thing.
-
-She has this neato staff that can swallow things, and wouldn't
-you know it some monsters want to eat her.
-
-You're not gonna let that happen, are ya?
-
-Click to move
-Right click to attack
-Middle click to super attack
-Spacebar to end turn"
