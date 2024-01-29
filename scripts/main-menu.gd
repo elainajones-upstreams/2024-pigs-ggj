@@ -17,7 +17,6 @@ func _ready():
 	next_level = 0
 	texture_modulate = 0.0
 	self.modulate.a = texture_modulate
-	visible = true
 	
 func _process(delta):
 	if (fading_in):

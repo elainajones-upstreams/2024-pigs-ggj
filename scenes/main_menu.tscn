@@ -13,7 +13,6 @@ variation_embolden = 1.14
 spacing_glyph = 6
 
 [node name="main-menu" type="Control"]
-visible = false
 modulate = Color(1, 1, 1, 0)
 layout_mode = 3
 anchors_preset = 15
