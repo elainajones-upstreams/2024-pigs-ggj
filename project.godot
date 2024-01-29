@@ -45,6 +45,8 @@ cycle_attacks={
 
 [layer_names]
 
+2d_physics/layer_1="enemy"
+2d_physics/layer_2="player"
 2d_render/emulate_touch_from_mouse=false
 
 [rendering]

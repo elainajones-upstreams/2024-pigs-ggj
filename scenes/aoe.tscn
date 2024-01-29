@@ -172,6 +172,8 @@ animations = [{
 }]
 
 [node name="AOE" type="Area2D"]
+collision_layer = 0
+collision_mask = 5
 script = ExtResource("1_8eais")
 
 [node name="aoeCollision" type="CollisionShape2D" parent="."]
@@ -181,4 +183,4 @@ shape = SubResource("RectangleShape2D_gb3rd")
 z_index = 6
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_jvkc4")
-animation = &"basic_attack"
+animation = &"aoe"

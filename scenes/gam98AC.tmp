@@ -484,8 +484,6 @@ script = ExtResource("2_1eg46")
 
 [node name="Character" type="CharacterBody2D" parent="."]
 position = Vector2(33, 31)
-collision_layer = 2
-collision_mask = 2
 script = ExtResource("3_8vgae")
 
 [node name="charactersprite" type="AnimatedSprite2D" parent="Character"]

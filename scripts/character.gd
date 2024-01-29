@@ -200,3 +200,8 @@ func cycle_attacks():
 	if selected_ability > attacks.size() - 1:
 		selected_ability = 0
 	print("SELECTED ABILITY IS " + attacks.keys()[selected_ability])
+
+func on_pickup(pickup):
+	print("I HAVE PICKED UP AN ITEM " + var_to_str(pickup))
+	action_points += pickup.energy
+	hit_points -= pickup.hit_dmg
