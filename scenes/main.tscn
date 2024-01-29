@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://dsxo7sxwcqacp"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_6ic0a"]
+
+[node name="Node" type="Node"]
+
+[node name="GridContainer" type="GridContainer" parent="."]
+custom_minimum_size = Vector2(1920, 1080)
+offset_right = 1920.0
+offset_bottom = 1080.0
+columns = 2
+script = ExtResource("1_6ic0a")
+metadata/_edit_lock_ = true
