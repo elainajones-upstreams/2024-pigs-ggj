@@ -1,0 +1,101 @@
+[gd_scene load_steps=8 format=3 uid="uid://bqx6kmelu3hd0"]
+
+[ext_resource type="Script" path="res://scripts/main-menu.gd" id="1_vxrmn"]
+[ext_resource type="Texture2D" uid="uid://b45dqqfi5kkf4" path="res://sprites/tiles/biomech_background_tile.png" id="2_w2046"]
+[ext_resource type="Theme" uid="uid://c3o700xprp4kx" path="res://fonts/game_text.tres" id="3_gt7to"]
+[ext_resource type="Texture2D" uid="uid://lq3ocx3w2dke" path="res://sprites/ui/mycomancer_cover_art.png" id="3_jnvp7"]
+[ext_resource type="Theme" uid="uid://cwkxx23w5gdep" path="res://sprites/ui/ui theme.tres" id="4_wym3n"]
+[ext_resource type="FontFile" uid="uid://ddvpfyk48ddnl" path="res://fonts/CAYETANO.ttf" id="5_vgmbf"]
+
+[sub_resource type="FontVariation" id="FontVariation_afv77"]
+base_font = ExtResource("5_vgmbf")
+variation_embolden = 1.14
+spacing_glyph = 6
+
+[node name="main-menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_vxrmn")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="right-picture" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("2_w2046")
+expand_mode = 5
+
+[node name="MycomancerCoverArt" type="Sprite2D" parent="."]
+position = Vector2(575, 320)
+scale = Vector2(0.614815, 0.614815)
+texture = ExtResource("3_jnvp7")
+
+[node name="top-text" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 14.0
+offset_right = 1162.0
+offset_bottom = 198.0
+theme = ExtResource("3_gt7to")
+theme_override_colors/default_color = Color(0.225987, 0.172066, 0.361667, 1)
+theme_override_colors/font_outline_color = Color(0.713199, 0.867529, 0.564058, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/normal_font = SubResource("FontVariation_afv77")
+theme_override_font_sizes/normal_font_size = 128
+bbcode_enabled = true
+text = "[center]MYCOMANCER[/center]"
+
+[node name="buttons" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 87.0
+offset_top = 336.0
+offset_right = 406.0
+offset_bottom = 569.0
+scale = Vector2(1, 1.16)
+
+[node name="PanelContainer" type="PanelContainer" parent="buttons"]
+layout_mode = 1
+offset_right = 317.0
+offset_bottom = 211.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="buttons/PanelContainer"]
+layout_mode = 2
+theme = ExtResource("4_wym3n")
+
+[node name="start-game" type="Button" parent="buttons/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "start game"
+
+[node name="credits" type="Button" parent="buttons/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "credits"
+
+[node name="options" type="Button" parent="buttons/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "options"
+
+[node name="quit" type="Button" parent="buttons/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "quit"
+
+[connection signal="pressed" from="buttons/PanelContainer/VBoxContainer/start-game" to="." method="_on_startgame_pressed"]
+[connection signal="pressed" from="buttons/PanelContainer/VBoxContainer/credits" to="." method="_on_credits_pressed"]
+[connection signal="pressed" from="buttons/PanelContainer/VBoxContainer/options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="buttons/PanelContainer/VBoxContainer/quit" to="." method="_on_quit_pressed"]

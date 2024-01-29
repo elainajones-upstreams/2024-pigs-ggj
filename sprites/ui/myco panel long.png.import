@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dlk5gsb1xkyro"
-path="res://.godot/imported/character.png-eb70ac48a5acf508c4b7740ea4ac4fae.ctex"
+uid="uid://b20jfcfgfr5ar"
+path="res://.godot/imported/myco panel long.png-9004fad35b1f6108325bff4f09fbc75a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/character.png"
-dest_files=["res://.godot/imported/character.png-eb70ac48a5acf508c4b7740ea4ac4fae.ctex"]
+source_file="res://sprites/ui/myco panel long.png"
+dest_files=["res://.godot/imported/myco panel long.png-9004fad35b1f6108325bff4f09fbc75a.ctex"]
 
 [params]
 

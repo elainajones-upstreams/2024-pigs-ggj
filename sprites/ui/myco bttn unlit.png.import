@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bc87elh4cxdll"
-path="res://.godot/imported/obstacle.png-0258c5f5ce65bfa0dd8610adeb784f54.ctex"
+uid="uid://6gjtvpf47ghk"
+path="res://.godot/imported/myco bttn unlit.png-09fc37a5310fc6f8191d6bade4014acc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/obstacle.png"
-dest_files=["res://.godot/imported/obstacle.png-0258c5f5ce65bfa0dd8610adeb784f54.ctex"]
+source_file="res://sprites/ui/myco bttn unlit.png"
+dest_files=["res://.godot/imported/myco bttn unlit.png-09fc37a5310fc6f8191d6bade4014acc.ctex"]
 
 [params]
 
