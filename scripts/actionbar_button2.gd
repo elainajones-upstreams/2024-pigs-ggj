@@ -8,4 +8,5 @@ func _ready():
 	actionbar_button.actionbar_button_pressed.connect(on_actionbar_button_pressed)
 
 func on_actionbar_button_pressed(action_type: String):
+	print("KILL ME")
 	actionbar_button_pressed2.emit(action_type) # remarkable

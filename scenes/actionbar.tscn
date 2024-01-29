@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ciqck11sci5iw"]
 
-[ext_resource type="Script" path="res://scenes/actionbar.gd" id="1_0t346"]
+[ext_resource type="Script" path="res://scripts/actionbar.gd" id="1_0243w"]
 
 [node name="actionbar" type="Control"]
 layout_mode = 3
@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("1_0t346")
+script = ExtResource("1_0243w")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1

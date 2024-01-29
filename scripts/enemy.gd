@@ -156,7 +156,7 @@ func die():
 	
 func attack():
 	_change_state(Utils.State.ATTACKING)
-	player.on_hit(Attack.new(7, player.position, []))
+	player.on_hit(Attack.new(7, player.position, [], "Enemy"))
 	baddie_attack_sound.play(0.0)
 	baddie_sprite.play("baddie_attack")
 	await baddie_sprite.animation_finished
