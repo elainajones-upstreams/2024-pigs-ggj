@@ -5,6 +5,13 @@ var fading_out = false
 
 var texture_modulate: float = 0.0
 
+func _ready():
+	fading_in = true
+	fading_out = false
+	texture_modulate = 0.0
+	self.modulate.a = texture_modulate
+	visible = true
+
 func _unhandled_key_input(event):
 	if Input.is_anything_pressed():
 		fading_out = true

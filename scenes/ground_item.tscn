@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=3 uid="uid://cc6173trqt52h"]
 
-[ext_resource type="Script" path="res://ground_item.gd" id="1_gub8u"]
+[ext_resource type="Script" path="res://scripts/ground_item.gd" id="1_gub8u"]
 [ext_resource type="Texture2D" uid="uid://kyjsxcmfyhnh" path="res://sprites/pickup/bad/badtech_00.png" id="2_ag4d0"]
 [ext_resource type="Texture2D" uid="uid://ssfriatf4f1w" path="res://sprites/pickup/bad/badtech_01.png" id="3_ycqha"]
 [ext_resource type="Texture2D" uid="uid://dbolaqmtp4sxr" path="res://sprites/pickup/bad/badtech_02.png" id="4_hiaxf"]

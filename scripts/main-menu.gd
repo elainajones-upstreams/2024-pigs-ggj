@@ -3,16 +3,22 @@ extends CanvasItem
 var fading_in = true
 var fading_out = false
 
-enum NEXT_LEVEL { GAME, CREDITS, EXIT, OPTIONS }
-var next_level = NEXT_LEVEL.EXIT
+var next_level = 0
+enum NEXT_LEVEL { GAME    = 1, 
+				  CREDITS = 2, 
+				  QUIT    = 3, 
+				  OPTIONS = 4 }
 
-var texture_modulate: float = 0.0
+var texture_modulate: float
 
-func _unhandled_key_input(event):
-	if Input.is_anything_pressed():
-		fading_out = true
-		fading_in = false
-
+func _ready():
+	fading_in = true
+	fading_out = false
+	next_level = 0
+	texture_modulate = 0.0
+	self.modulate.a = texture_modulate
+	visible = true
+	
 func _process(delta):
 	if (fading_in):
 		self.modulate.a = texture_modulate
@@ -24,34 +30,35 @@ func _process(delta):
 		self.modulate.a = texture_modulate
 		texture_modulate -= delta / 3
 		if texture_modulate <= 0:
-			fading_in = false
-			fading_out = false
-			start_game()
+			switch_scene()
 
-func start_game():
-	get_tree().change_scene_to_file("scenes/tutorial.tscn")
-
-func show_credits():
-	get_tree().change_scene_to_file("scenes/credits.tscn")
-	
-func quit_game():
-	get_tree().quit()
-
-func options():
-	pass
+func switch_scene():
+	if next_level == NEXT_LEVEL.GAME:
+		get_tree().change_scene_to_file("scenes/tutorial.tscn")
+	if next_level == NEXT_LEVEL.CREDITS:
+		get_tree().change_scene_to_file("scenes/credits.tscn")
+	if next_level == NEXT_LEVEL.OPTIONS:
+		pass
+	if next_level == NEXT_LEVEL.QUIT:
+		get_tree().quit()
 
 func _on_startgame_pressed():
 	next_level = NEXT_LEVEL.GAME
-	start_game()
+	fading_in = false
+	fading_out = true
 
 func _on_credits_pressed():
 	next_level = NEXT_LEVEL.CREDITS
-	show_credits()
+	fading_in = false
+	fading_out = true
 
 func _on_options_pressed():
 	next_level = NEXT_LEVEL.OPTIONS
-	options()
+	#FIXME TODO
+	#fading_in = false
+	#fading_out = true #uncomment when options screen added
 
 func _on_quit_pressed():
-	next_level = NEXT_LEVEL.EXIT
-	quit_game()
+	next_level = NEXT_LEVEL.QUIT
+	fading_in = false
+	fading_out = true
