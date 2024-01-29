@@ -12,7 +12,6 @@ var pickup : Pickup
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print("ITEM CREATED")
 	$item_animation.play(pickup.animation)
 	monitoring = true
 	await body_entered
@@ -23,7 +22,6 @@ func _ready():
 	#pass
 
 func picked_up():
-	print("PICKED GORBO")
 	$item_animation.play(pickup.animation)
 	var targets = get_overlapping_bodies()
 	for target in targets:
@@ -31,7 +29,6 @@ func picked_up():
 	queue_free()
 	
 func on_hit(atk):
-	print("GORBO HIT")
 	if pickup.hit_dmg > 0:
 		player.on_pickup(pickup)
 		queue_free()

@@ -187,6 +187,7 @@ func _attack(click_position, basic):
 		if action_points == 0:
 			_change_state(Utils.State.EXHAUSTED)
 	else:
+		pass
 	
 func _return_to_idle():
 	animated_sprite.play("idle")
