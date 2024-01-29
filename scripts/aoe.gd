@@ -14,9 +14,8 @@ func _ready():
 	#position = attack.center
 	aoe()
 
-## Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-	#pass
+func _process(delta):
+	pass
 
 func aoe():
 	$aoeAnimation.play(attack.animation)
@@ -24,5 +23,8 @@ func aoe():
 	var targets = get_overlapping_bodies()
 	for target in targets:
 		target.on_hit(attack)
+	var target_areas = get_overlapping_areas()
+	for target_area in target_areas:
+		target_area.on_hit(attack)
 	await get_tree().create_timer(linger_time).timeout
 	queue_free()

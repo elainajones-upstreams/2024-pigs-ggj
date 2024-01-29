@@ -38,9 +38,11 @@ var action_points : int
 
 var selected_ability = 0
 var current_attack : Attack
+var hand = []
 
 
 func _ready():
+	Attack.draw_hand(self)
 	basic_attack.animation = "basic_attack"
 	hit_points = CHARACTER_MAX_HP
 	action_points = CHARACTER_ACTION_POINTS
@@ -203,6 +205,12 @@ func cycle_attacks():
 		selected_ability = 0
 	print("SELECTED ABILITY IS " + attacks.keys()[selected_ability])
 
+
+func on_pickup(pickup):
+	print("I HAVE PICKED UP AN ITEM " + var_to_str(pickup))
+	action_points += pickup.energy
+	hit_points -= pickup.hit_dmg
+
 func select_attack(action_type: String):
 	match(action_type):
 		"vertical":
@@ -210,4 +218,4 @@ func select_attack(action_type: String):
 		"plus":
 			selected_ability = 1
 	print("selected ability is " + attacks.keys()[selected_ability])
-	
+
