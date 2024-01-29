@@ -10,7 +10,6 @@ var texture_modulate: float = 0.0
 
 func _unhandled_key_input(event):
 	if Input.is_anything_pressed():
-		print("main-menu is pressed")
 		fading_out = true
 		fading_in = false
 

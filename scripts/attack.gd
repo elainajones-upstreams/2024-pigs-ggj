@@ -37,15 +37,12 @@ static func get_random():
 	
 static func draw_hand(player):
 	var rng = RandomNumberGenerator.new()
-	print("ATTACKGEN GENERATIN PLAYER HAND")
 	player.hand.append(get_random())
 	player.hand.append(get_random())
 	if rng.randf() >= 0.8:
 		player.hand.append(get_chaos_snake())
 	else:
 		player.hand.append(get_random())
-	print("ATTACKGEN NEW PLAYER HAND " + var_to_str(player.hand))
-	print("ATTACKGEN NEW PLAYER HAND SIZE " + var_to_str(player.hand.size()))
 		
 static func get_chaos_snake():
 	var snake = [Vector2i(0,0)]
@@ -53,11 +50,9 @@ static func get_chaos_snake():
 	
 static func do_chaos(head, body, length):
 	var rng = RandomNumberGenerator.new()
-	print("ATTACKGEN SNAKE CALL " + var_to_str(body))
 	if length == 0:
 		return body
 	var roll = rng.randf()
-	print("ATTACKGEN SNAKE ROLL " + var_to_str(roll))
 	if roll <= 0.25:
 		body.append(Vector2i(head.x + 1, head.y ))
 		do_chaos(body[body.size() - 1], body, (length - 1))

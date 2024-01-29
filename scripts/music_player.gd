@@ -17,7 +17,6 @@ func _ready():
 	play_music()
 
 func play_music():
-	print("PLAYING MUSIC")
 	audio_node.stream = sound_track[track]
 	audio_node.play(0.0)
 
