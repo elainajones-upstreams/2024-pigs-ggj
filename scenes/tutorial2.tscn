@@ -1,0 +1,88 @@
+[gd_scene load_steps=5 format=3 uid="uid://ce10rmf85yu8w"]
+
+[ext_resource type="Script" path="res://scripts/tutorial.gd" id="1_x60y5"]
+[ext_resource type="Texture2D" uid="uid://b45dqqfi5kkf4" path="res://sprites/tiles/biomech_background_tile.png" id="2_rvqcf"]
+[ext_resource type="Texture2D" uid="uid://b20jfcfgfr5ar" path="res://sprites/ui/myco panel long.png" id="3_5xfpo"]
+[ext_resource type="Theme" uid="uid://c3o700xprp4kx" path="res://fonts/game_text.tres" id="4_h4cuf"]
+
+[node name="tutorial" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_x60y5")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="left-picture" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("2_rvqcf")
+expand_mode = 5
+
+[node name="right-picture" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("2_rvqcf")
+expand_mode = 5
+
+[node name="MycoPanelLong" type="Sprite2D" parent="."]
+position = Vector2(584, 473.5)
+scale = Vector2(1.045, 1.125)
+texture = ExtResource("3_5xfpo")
+
+[node name="top-text" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 91.0
+offset_top = 130.0
+offset_right = 1069.0
+offset_bottom = 314.0
+theme = ExtResource("4_h4cuf")
+theme_override_colors/default_color = Color(0.713726, 0.866667, 0.564706, 1)
+theme_override_colors/font_outline_color = Color(0.227451, 0.172549, 0.360784, 1)
+theme_override_constants/outline_size = 5
+text = "On an world dominated by fungi, Devi Hamilton is the last human with an organic central nervous system. Industrial contaminants have corrupted the fungal mother-brain, but Devi knows it can be healed, and that humanity and fungi alike can live peacefully.
+
+But to get to the mother-brain, Devi must survive its hostile mutant offshoots... and resist the influence of the same corruption.
+"
+
+[node name="bottom-text" type="RichTextLabel" parent="."]
+texture_filter = 3
+layout_mode = 0
+offset_left = 286.0
+offset_top = 380.0
+offset_right = 540.0
+offset_bottom = 562.0
+theme = ExtResource("4_h4cuf")
+theme_override_colors/default_color = Color(0.890196, 0.956863, 0.827451, 1)
+theme_override_font_sizes/normal_font_size = 47
+text = "Move
+Attack
+Super Atk
+End Turn"
+
+[node name="bottom-text2" type="RichTextLabel" parent="."]
+texture_filter = 3
+layout_mode = 0
+offset_left = 576.0
+offset_top = 380.0
+offset_right = 921.0
+offset_bottom = 562.0
+theme = ExtResource("4_h4cuf")
+theme_override_colors/default_color = Color(0.713726, 0.866667, 0.564706, 1)
+theme_override_font_sizes/normal_font_size = 47
+text = "Left Click
+Right Click
+Middle Click
+Spacebar"
