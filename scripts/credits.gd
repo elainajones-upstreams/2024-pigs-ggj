@@ -7,7 +7,7 @@ var texture_modulate: float = 0.0
 
 func _unhandled_key_input(event):
 	if Input.is_anything_pressed():
-		print("tutorial is pressed")
+		print("credits is pressed")
 		fading_out = true
 		fading_in = false
 
@@ -27,4 +27,4 @@ func _process(delta):
 			switch_level()
 
 func switch_level():
-	get_tree().change_scene_to_file("scenes/game.tscn")
+	get_tree().change_scene_to_file("scenes/main_menu.tscn")
