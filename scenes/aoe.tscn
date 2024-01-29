@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://6dtypoj7r5p5"]
+[gd_scene load_steps=41 format=3 uid="uid://6dtypoj7r5p5"]
 
 [ext_resource type="Script" path="res://scripts/aoe.gd" id="1_8eais"]
 [ext_resource type="Texture2D" uid="uid://ygfgpbg5h3ha" path="res://sprites/aoe/single_tile/AOE_attack_00.png" id="2_lgndt"]
@@ -26,6 +26,18 @@
 [ext_resource type="Texture2D" uid="uid://ce67g1fyqdual" path="res://sprites/aoe/single_tile/AOE_attack_22.png" id="24_134sv"]
 [ext_resource type="Texture2D" uid="uid://bgu7cwkb0ofae" path="res://sprites/aoe/single_tile/AOE_attack_23.png" id="25_rria7"]
 [ext_resource type="Texture2D" uid="uid://dthg1qtkn0urg" path="res://sprites/aoe/single_tile/AOE_attack_24.png" id="26_j01li"]
+[ext_resource type="Texture2D" uid="uid://cajito45agd1o" path="res://sprites/aoe/basic_attack/attack_animation_00.png" id="27_yy3gv"]
+[ext_resource type="Texture2D" uid="uid://2oymk8ce882" path="res://sprites/aoe/basic_attack/attack_animation_01.png" id="28_42l4e"]
+[ext_resource type="Texture2D" uid="uid://ijgcan2bi473" path="res://sprites/aoe/basic_attack/attack_animation_02.png" id="29_7ruw1"]
+[ext_resource type="Texture2D" uid="uid://b6pf2ayu5usjs" path="res://sprites/aoe/basic_attack/attack_animation_03.png" id="30_qbwmw"]
+[ext_resource type="Texture2D" uid="uid://ghj5jq0r1xht" path="res://sprites/aoe/basic_attack/attack_animation_04.png" id="31_otvuw"]
+[ext_resource type="Texture2D" uid="uid://o1bfb7wj21bo" path="res://sprites/aoe/basic_attack/attack_animation_05.png" id="32_2126g"]
+[ext_resource type="Texture2D" uid="uid://vqwexd0y0imo" path="res://sprites/aoe/basic_attack/attack_animation_06.png" id="33_75y1s"]
+[ext_resource type="Texture2D" uid="uid://bmed3kmuu8hwa" path="res://sprites/aoe/basic_attack/attack_animation_07.png" id="34_v5i5e"]
+[ext_resource type="Texture2D" uid="uid://c1dc1cqta5lci" path="res://sprites/aoe/basic_attack/attack_animation_08.png" id="35_b1py7"]
+[ext_resource type="Texture2D" uid="uid://drvk6apbvlhcn" path="res://sprites/aoe/basic_attack/attack_animation_09.png" id="36_tmx0x"]
+[ext_resource type="Texture2D" uid="uid://hioaff1y6jpw" path="res://sprites/aoe/basic_attack/attack_animation_10.png" id="37_wueih"]
+[ext_resource type="Texture2D" uid="uid://dkb7f1gcv67bt" path="res://sprites/aoe/basic_attack/attack_animation_11.png" id="38_4b74f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gb3rd"]
 size = Vector2(64, 64)
@@ -112,6 +124,47 @@ animations = [{
 "name": &"aoe",
 "speed": 16.0
 }, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("27_yy3gv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_42l4e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_7ruw1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_qbwmw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_otvuw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_2126g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_75y1s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_v5i5e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_b1py7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_tmx0x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_wueih")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_4b74f")
+}],
+"loop": false,
+"name": &"basic_attack",
+"speed": 8.0
+}, {
 "frames": [],
 "loop": true,
 "name": &"default",
@@ -128,4 +181,4 @@ shape = SubResource("RectangleShape2D_gb3rd")
 z_index = 6
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_jvkc4")
-animation = &"aoe"
+animation = &"basic_attack"

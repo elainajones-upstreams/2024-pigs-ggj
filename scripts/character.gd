@@ -9,6 +9,8 @@ const CHARACTER_ACTION_POINTS = 7
 const ATTACK_COST = 2
 const Attack = preload("res://scripts/attack.gd")
 const Utils = preload("res://scripts/utils.gd")
+const vertical = [Vector2i(0, -5), Vector2i(0, -4), Vector2i(0, -3), Vector2i(0, -2), Vector2i(0, -1), Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, 2), Vector2i(0, 3), Vector2i(0, 4), Vector2i(0, 5)]
+const plus = [Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, -2), Vector2i(0, 2), Vector2i(2, 0), Vector2i(-2, 0)]
 
 signal turn_end
 
@@ -22,25 +24,33 @@ var _velocity = Vector2()
 @onready var animated_sprite = $charactersprite
 @onready var ground_attack = $ground_attack
 @onready var player_orig_position = position
+@onready var basic_attack = Attack.new(10, position, [Vector2i(0, 0)])
+
 var player_orig_color : Color
 
 var _click_position = Vector2()
 var _path = PackedVector2Array()
 var _next_point = Vector2()
+var attacks = {}
 
 var hit_points : int
 var action_points : int
 
+var selected_ability = 0
+var current_attack : Attack
 
 
 func _ready():
+	basic_attack.animation = "basic_attack"
 	hit_points = CHARACTER_MAX_HP
 	action_points = CHARACTER_ACTION_POINTS
 	_change_state(Utils.State.IDLE)
 	player_orig_color = animated_sprite.modulate
 	animated_sprite.animation_finished.connect(_return_to_idle)
 	_tile_map.player_turn.connect(_start_turn)
-
+	#attacks["basic"] = Attack.new(10, position, [Vector2i(0, 0)])
+	attacks["vertical"] = Attack.new(10, position, vertical)
+	attacks["plus"] = Attack.new(10, position, plus)
 
 func _process(_delta):
 	#if _state == Utils.State.NOT_MY_TURN:
@@ -71,8 +81,13 @@ func _unhandled_input(event):
 			if event.is_action_pressed(&"move_to"):
 				_change_state(Utils.State.FOLLOW)
 		if event.is_action_pressed(&"attack"):
-			_attack(_click_position)
+			_attack(_click_position, "basic")
 			_tile_map.player_attack_squares()
+		if event.is_action_pressed(&"aoe_attack"):
+			_attack(_click_position, attacks.keys()[selected_ability])
+			_tile_map.player_attack_squares()
+		if event.is_action_pressed(&"cycle_attacks"):
+			cycle_attacks()
 		#TODO: Player should not be able to do this while an enemy is dying, that breaks it
 		elif event.is_action_pressed(&"end_turn"):
 			end_turn()
@@ -124,9 +139,19 @@ func _change_state(new_state):
 		print("I AM ENDING MY TURN")
 	_state = new_state
 	
-func _attack(click_position):
+func _attack(click_position, attackName):
 	if action_points >= ATTACK_COST:
-		_tile_map.execute_attack(Attack.new(10, _tile_map.get_tile_center(click_position)))
+		if attackName == "basic":
+			basic_attack.center = _tile_map.get_tile_center(click_position)
+			current_attack = basic_attack
+		else:
+			print("CLICK ATTACK " + var_to_str(_tile_map.get_tile_center(click_position)))
+			print("BEFORE ATTACK " + var_to_str(attacks[attackName].center))
+			current_attack = attacks[attackName]
+			current_attack.center = _tile_map.get_tile_center(click_position)
+			print("THIS IS MY ATTACK! " + var_to_str(current_attack))
+			print("AFTER ATTACK " + var_to_str(current_attack.center))
+		_tile_map.execute_attack(current_attack)
 		animated_sprite.play("player_attack")
 		ground_attack.play(0.0)
 		await animated_sprite.animation_finished
@@ -169,3 +194,9 @@ func _start_turn():
 	if animated_sprite.animation == "player_take_damage":
 		await animated_sprite.animation_finished
 	_change_state(Utils.State.IDLE)
+
+func cycle_attacks():
+	selected_ability = selected_ability + 1
+	if selected_ability > attacks.size() - 1:
+		selected_ability = 0
+	print("SELECTED ABILITY IS " + attacks.keys()[selected_ability])
