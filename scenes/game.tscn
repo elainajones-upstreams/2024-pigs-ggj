@@ -484,25 +484,26 @@ layer_0/tile_data = PackedInt32Array(393217, 1, 0, 327681, 65540, 1, 262145, 655
 script = ExtResource("2_1eg46")
 
 [node name="Character" type="CharacterBody2D" parent="." node_paths=PackedStringArray("actionbar")]
-position = Vector2(33, 31)
+position = Vector2(545, 288)
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("3_8vgae")
 actionbar = NodePath("../actionbar-container/actionbar")
-speed = null
 
 [node name="charactersprite" type="AnimatedSprite2D" parent="Character"]
-position = Vector2(-1, 0)
+position = Vector2(2, -1)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_157pr")
 animation = &"player_death"
 
 [node name="ground_attack" type="AudioStreamPlayer2D" parent="Character"]
+position = Vector2(-3, 1)
 stream = ExtResource("42_vln8a")
 
 [node name="player_collision" type="CollisionShape2D" parent="Character"]
 light_mask = 2
 visibility_layer = 2
+position = Vector2(-3, 0)
 scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_33vo5")
 
@@ -513,7 +514,7 @@ script = ExtResource("11_nhi8w")
 [node name="baddiesprite" type="AnimatedSprite2D" parent="Enemy"]
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_trh50")
-animation = &"baddie_die"
+animation = &"baddie_attack"
 
 [node name="baddiecollision" type="CollisionShape2D" parent="Enemy"]
 scale = Vector2(2, 2)
@@ -585,15 +586,17 @@ position = Vector2(0, -584)
 stream = ExtResource("69_2l61g")
 
 [node name="Enemy3" type="CharacterBody2D" parent="." groups=["Enemies"]]
-position = Vector2(33, 608)
+position = Vector2(27, 286)
 script = ExtResource("11_nhi8w")
 
 [node name="baddiesprite" type="AnimatedSprite2D" parent="Enemy3"]
+position = Vector2(17, -6)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_trh50")
 animation = &"baddie_attack"
 
 [node name="baddiecollision" type="CollisionShape2D" parent="Enemy3"]
+position = Vector2(15, -3)
 scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_c5jdx")
 
@@ -606,15 +609,17 @@ position = Vector2(1092, -584)
 stream = ExtResource("68_uqn1r")
 
 [node name="Enemy6" type="CharacterBody2D" parent="." groups=["Enemies"]]
-position = Vector2(160, 608)
+position = Vector2(36, 607)
 script = ExtResource("11_nhi8w")
 
 [node name="baddiesprite" type="AnimatedSprite2D" parent="Enemy6"]
+position = Vector2(2, -5)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_trh50")
 animation = &"baddie_attack"
 
 [node name="baddiecollision" type="CollisionShape2D" parent="Enemy6"]
+position = Vector2(-1, -2)
 scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_c5jdx")
 
@@ -623,27 +628,6 @@ position = Vector2(1092, -584)
 stream = ExtResource("69_2l61g")
 
 [node name="baddie_death_sound" type="AudioStreamPlayer2D" parent="Enemy6"]
-position = Vector2(1092, -584)
-stream = ExtResource("68_uqn1r")
-
-[node name="Enemy7" type="CharacterBody2D" parent="." groups=["Enemies"]]
-position = Vector2(300, 608)
-script = ExtResource("11_nhi8w")
-
-[node name="baddiesprite" type="AnimatedSprite2D" parent="Enemy7"]
-scale = Vector2(2, 2)
-sprite_frames = SubResource("SpriteFrames_trh50")
-animation = &"baddie_attack"
-
-[node name="baddiecollision" type="CollisionShape2D" parent="Enemy7"]
-scale = Vector2(2, 2)
-shape = SubResource("RectangleShape2D_c5jdx")
-
-[node name="baddie_attack_sound" type="AudioStreamPlayer2D" parent="Enemy7"]
-position = Vector2(1092, -584)
-stream = ExtResource("69_2l61g")
-
-[node name="baddie_death_sound" type="AudioStreamPlayer2D" parent="Enemy7"]
 position = Vector2(1092, -584)
 stream = ExtResource("68_uqn1r")
 
@@ -711,15 +695,17 @@ position = Vector2(1092, -584)
 stream = ExtResource("68_uqn1r")
 
 [node name="Enemy11" type="CharacterBody2D" parent="." groups=["Enemies"]]
-position = Vector2(930, 608)
+position = Vector2(42, 36)
 script = ExtResource("11_nhi8w")
 
 [node name="baddiesprite" type="AnimatedSprite2D" parent="Enemy11"]
+position = Vector2(1, -5)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_trh50")
 animation = &"baddie_attack"
 
 [node name="baddiecollision" type="CollisionShape2D" parent="Enemy11"]
+position = Vector2(-3, 0)
 scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_c5jdx")
 
